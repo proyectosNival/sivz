@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,10 +11,12 @@
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Custom styles for this template -->
     <link href="css/signin.css" rel="stylesheet">
     <script type="text/javascript" src="js/prefixfree.min.js"></script>
+    <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="librerias/login.js"></script>
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 
@@ -32,16 +34,41 @@
       <div class="col-sm-6 col-md-4 col-md-offset-4">
         <div class="account-wall">
           <h1 class="text-center login-title">INGRESO AL SISTEMA</h1>
-          <form class="form-signin">
-            <input type="text" class="form-control" placeholder="Usuario" required autofocus>
-            <input type="password" class="form-control" placeholder="Clave" required>
-            <button class="btn btn-primary" type="submit">Ingreso</button>
-            <button class="btn btn-success" type="submit">Recuperar</button>
+          <form class="form-signin" id="form_loginUsuario">
+            <input type="text" id="txt_loginUsuario" name="txt_loginUsuario" class="form-control" placeholder="Usuario" required autofocus>
+            <input type="password" id="txt_loginPass" name="txt_loginPass" class="form-control" placeholder="Clave" required>
+            <button class="btn btn-primary" id="btn_loginIngreso" type="submit">
+            <span class="glyphicon glyphicon-log-in"></span> Ingreso</button>
+            <button class="btn btn-success" type="button" id="btn_loginRecuperar" data-toggle="modal" data-target="#recuperarClave">
+            <span class="glyphicon glyphicon-refresh"></span> Recuperar</button>
             <span class="clearfix"></span>
           </form>
         </div>
       </div>
     </div>
+  </div>
+
+
+<div class="modal fade" id="recuperarClave" tabindex="-1" role="dialog" aria-labelledby="MyModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" >&times;</button>
+        <h4>Recuperar Clave de acceso</h4>
+      </div>  
+      <div class="modal-body">
+        <div class="form-signin">
+            <input type="text" id="txt_loginUsuarioAdmin" name="txt_loginUsuarioAdmin" class="form-control" placeholder="Usuario" required autofocus>
+            <input type="password" id="txt_loginPassRestaurar" name="txt_loginPassRestaurar" class="form-control" placeholder="Clave Administrador" required>
+            <span class="clearfix"></span>
+          </div> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-refresh"></span> Recuperar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 
