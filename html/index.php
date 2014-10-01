@@ -98,7 +98,7 @@
         }
         function btn_indexIngresos() 
         {
-          document.getElementById("tablas").innerHTML='<iframe src="ingresos.php" frameborder="0" width="100%" height="1240px"></iframe>';
+          document.getElementById("tablas").innerHTML='<iframe src="ingresos.php" frameborder="0" width="100%" height="1000px;"></iframe>';
         }
         function btn_indexReportes() 
         {

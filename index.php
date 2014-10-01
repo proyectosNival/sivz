@@ -38,13 +38,22 @@
       <div class="col-sm-6 col-md-4 col-md-offset-4">
         <div class="account-wall">
           <h1 class="text-center login-title"><span class="glyphicon glyphicon-phone"></span> INGRESO AL SISTEMA</h1>
+
           <form class="form-signin" id="form_loginUsuario">
-            <input type="text" id="txt_loginUsuario" name="txt_loginUsuario" class="form-control" placeholder="Usuario" required autofocus>
-            <input type="password" id="txt_loginPass" name="txt_loginPass" class="form-control" placeholder="Clave" required>
-            <button class="btn btn-primary" id="btn_loginIngreso" type="submit">
-            <span class="glyphicon glyphicon-log-in"></span> Ingreso</button>
-            <button class="btn btn-success" type="button" id="btn_loginRecuperar" data-toggle="modal" data-target="#recuperarClave">
-            <span class="glyphicon glyphicon-refresh"></span> Recuperar</button>
+            <div class="input-group ">
+              <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+              <input type="text" id="txt_loginUsuario" name="txt_loginUsuario" class="form-control" placeholder="Usuario" required autofocus>
+            </div>
+            <div class="input-group">
+              <span class="input-group-addon"><span class="glyphicon glyphicon-floppy-disk"></span></span>
+              <input type="password" id="txt_loginPass" name="txt_loginPass" class="form-control" placeholder="Contraseña" required>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary" id="btn_loginIngreso" type="submit">
+              <span class="glyphicon glyphicon-log-in"></span> Ingreso</button>
+              <button class="btn btn-success" type="button" id="btn_loginRecuperar" data-toggle="modal" data-target="#recuperarClave">
+              <span class="glyphicon glyphicon-refresh"></span> Recuperar</button>
+            </div>
             <span class="clearfix"></span>
           </form>
         </div>
@@ -62,9 +71,18 @@
       </div>  
       <div class="modal-body">
         <div class="form-signin">
+          <div class="input-group ">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
             <input type="text" id="txt_loginUsuarioAdmin" name="txt_loginUsuarioAdmin" class="form-control" placeholder="Usuario Admin" required autofocus>
+          </div>
+          <div class="input-group ">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
             <input type="text" id="txt_loginUsuarioCambio" name="txt_loginUsuarioCambio" class="form-control" placeholder="Usuario Normal" required autofocus>
+          </div>
+          <div class="input-group ">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-floppy-disk"></span></span>
             <input type="password" id="txt_loginPassRestaurar" name="txt_loginPassRestaurar" class="form-control" placeholder="Clave Administrador" required>
+          </div> 
             <span class="clearfix"></span>
           </div> 
       </div>
