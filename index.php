@@ -67,7 +67,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" >&times;</button>
-        <h4>Recuperar Clave de acceso</h4>
+        <h4><span class="glyphicon glyphicon-eye-close"></span> Recuperar Clave de acceso</h4>
       </div>  
       <div class="modal-body">
         <div class="form-signin">
@@ -87,8 +87,8 @@
           </div> 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="btn_restautarAcceso"><span class="glyphicon glyphicon-refresh"></span> Recuperar</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn_cerrarRecuperar"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
+        <button type="button" class="btn btn-success" id="btn_restautarAcceso"><span class="glyphicon glyphicon-refresh"></span> Recuperar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="btn_cerrarRecuperar"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
       </div>
     </div>
   </div>
