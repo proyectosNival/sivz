@@ -1,0 +1,622 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.2.2
+-- Dumped by pg_dump version 9.2.2
+-- Started on 2014-10-01 12:26:11
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 181 (class 3079 OID 11727)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2028 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 180 (class 1259 OID 35593)
+-- Name: claves; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE claves (
+    id_clave integer NOT NULL,
+    id_usuario integer,
+    clave text,
+    estado_clave character(1)
+);
+
+
+ALTER TABLE public.claves OWNER TO postgres;
+
+--
+-- TOC entry 168 (class 1259 OID 35456)
+-- Name: clientes; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE clientes (
+    id_cliente integer NOT NULL,
+    nombres_cliente text,
+    ci_ruc_cliente character(20),
+    telefono_cliente character(20),
+    celular_cliente character(20),
+    direccion_cliente text,
+    estado_cliente character(1),
+    ciudad_cliente text
+);
+
+
+ALTER TABLE public.clientes OWNER TO postgres;
+
+--
+-- TOC entry 178 (class 1259 OID 35570)
+-- Name: detalle_fc; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE detalle_fc (
+    id_detalle_fc integer NOT NULL,
+    id_factura_compra integer,
+    id_producto integer,
+    cantidad character(10),
+    precio character(10),
+    total character(10)
+);
+
+
+ALTER TABLE public.detalle_fc OWNER TO postgres;
+
+--
+-- TOC entry 177 (class 1259 OID 35550)
+-- Name: detalle_fv; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE detalle_fv (
+    id_detalle_fv integer NOT NULL,
+    id_factura_venta integer,
+    id_producto integer,
+    cantidad character(4),
+    precio character(10),
+    total character(10)
+);
+
+
+ALTER TABLE public.detalle_fv OWNER TO postgres;
+
+--
+-- TOC entry 174 (class 1259 OID 35506)
+-- Name: detalle_producto; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE detalle_producto (
+    id_detalle_producto integer NOT NULL,
+    cod_barras text,
+    color text,
+    precio_compra character(10),
+    id_media integer,
+    precio_venta character(10),
+    id_producto integer
+);
+
+
+ALTER TABLE public.detalle_producto OWNER TO postgres;
+
+--
+-- TOC entry 176 (class 1259 OID 35537)
+-- Name: factura_compra; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE factura_compra (
+    id_factura_compra integer NOT NULL,
+    fecha_factura date,
+    id_proveedor integer,
+    subtotal character(1),
+    descuento character(10),
+    iva character(10),
+    total character(10),
+    nro_factura text,
+    estado_factura character(1)
+);
+
+
+ALTER TABLE public.factura_compra OWNER TO postgres;
+
+--
+-- TOC entry 175 (class 1259 OID 35524)
+-- Name: factura_venta; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE factura_venta (
+    id_factura_venta integer NOT NULL,
+    id_cliente integer,
+    fecha_venta date,
+    subtotal character(10),
+    descuento character(10),
+    iva character(10),
+    total character(10),
+    nro_factura text,
+    estado_factura character(1)
+);
+
+
+ALTER TABLE public.factura_venta OWNER TO postgres;
+
+--
+-- TOC entry 172 (class 1259 OID 35485)
+-- Name: marca; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE marca (
+    id_marca integer NOT NULL,
+    nombre_marca text,
+    estado_marca character(1)
+);
+
+
+ALTER TABLE public.marca OWNER TO postgres;
+
+--
+-- TOC entry 171 (class 1259 OID 35480)
+-- Name: media; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE media (
+    id_media integer NOT NULL,
+    precio_inicial character(10),
+    precio_final character(10),
+    incremento character(10)
+);
+
+
+ALTER TABLE public.media OWNER TO postgres;
+
+--
+-- TOC entry 173 (class 1259 OID 35493)
+-- Name: producto; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE producto (
+    id_producto integer NOT NULL,
+    cod_producto text,
+    descripcion_producto text,
+    stock character(4),
+    stock_minimo character(4),
+    stock_maximo character(4),
+    estado_producto character(1),
+    id_marca integer
+);
+
+
+ALTER TABLE public.producto OWNER TO postgres;
+
+--
+-- TOC entry 170 (class 1259 OID 35472)
+-- Name: proveedor; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE proveedor (
+    id_proveedor integer NOT NULL,
+    nombre_proveedor text,
+    ci_ruc_proveedor character(20),
+    telefono_proveedord character(20),
+    direccion_proveedor text,
+    estado_proveedor character(1)
+);
+
+
+ALTER TABLE public.proveedor OWNER TO postgres;
+
+--
+-- TOC entry 179 (class 1259 OID 35585)
+-- Name: tipos_usuario; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tipos_usuario (
+    id_tipo_usuario integer NOT NULL,
+    nombre_usuario text,
+    estado_tipo character(1)
+);
+
+
+ALTER TABLE public.tipos_usuario OWNER TO postgres;
+
+--
+-- TOC entry 169 (class 1259 OID 35464)
+-- Name: usuario; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE usuario (
+    id_usuario integer NOT NULL,
+    nombre_usuario text,
+    ci_usuario character(20),
+    direccion_usuario text,
+    telefono_usuario character(20),
+    celular_usuario character(20),
+    fecha_registro date,
+    tipo_usuario character(2),
+    nick_usuario text,
+    estado_usuario character(1)
+);
+
+
+ALTER TABLE public.usuario OWNER TO postgres;
+
+--
+-- TOC entry 2020 (class 0 OID 35593)
+-- Dependencies: 180
+-- Data for Name: claves; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY claves (id_clave, id_usuario, clave, estado_clave) FROM stdin;
+1	1	123	1
+2	2	123123	1
+\.
+
+
+--
+-- TOC entry 2008 (class 0 OID 35456)
+-- Dependencies: 168
+-- Data for Name: clientes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY clientes (id_cliente, nombres_cliente, ci_ruc_cliente, telefono_cliente, celular_cliente, direccion_cliente, estado_cliente, ciudad_cliente) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2018 (class 0 OID 35570)
+-- Dependencies: 178
+-- Data for Name: detalle_fc; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY detalle_fc (id_detalle_fc, id_factura_compra, id_producto, cantidad, precio, total) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2017 (class 0 OID 35550)
+-- Dependencies: 177
+-- Data for Name: detalle_fv; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY detalle_fv (id_detalle_fv, id_factura_venta, id_producto, cantidad, precio, total) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2014 (class 0 OID 35506)
+-- Dependencies: 174
+-- Data for Name: detalle_producto; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY detalle_producto (id_detalle_producto, cod_barras, color, precio_compra, id_media, precio_venta, id_producto) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2016 (class 0 OID 35537)
+-- Dependencies: 176
+-- Data for Name: factura_compra; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY factura_compra (id_factura_compra, fecha_factura, id_proveedor, subtotal, descuento, iva, total, nro_factura, estado_factura) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2015 (class 0 OID 35524)
+-- Dependencies: 175
+-- Data for Name: factura_venta; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY factura_venta (id_factura_venta, id_cliente, fecha_venta, subtotal, descuento, iva, total, nro_factura, estado_factura) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2012 (class 0 OID 35485)
+-- Dependencies: 172
+-- Data for Name: marca; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY marca (id_marca, nombre_marca, estado_marca) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2011 (class 0 OID 35480)
+-- Dependencies: 171
+-- Data for Name: media; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY media (id_media, precio_inicial, precio_final, incremento) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2013 (class 0 OID 35493)
+-- Dependencies: 173
+-- Data for Name: producto; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY producto (id_producto, cod_producto, descripcion_producto, stock, stock_minimo, stock_maximo, estado_producto, id_marca) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2010 (class 0 OID 35472)
+-- Dependencies: 170
+-- Data for Name: proveedor; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY proveedor (id_proveedor, nombre_proveedor, ci_ruc_proveedor, telefono_proveedord, direccion_proveedor, estado_proveedor) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2019 (class 0 OID 35585)
+-- Dependencies: 179
+-- Data for Name: tipos_usuario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tipos_usuario (id_tipo_usuario, nombre_usuario, estado_tipo) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2009 (class 0 OID 35464)
+-- Dependencies: 169
+-- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY usuario (id_usuario, nombre_usuario, ci_usuario, direccion_usuario, telefono_usuario, celular_usuario, fecha_registro, tipo_usuario, nick_usuario, estado_usuario) FROM stdin;
+1	Admin	1234567890          	Admin	000000000           	00000000            	2014-10-01	1 	Admin	1
+2	Willy	1002910345          	Otavalo	062999999           	099999999999        	2014-01-01	2 	Willy	1
+\.
+
+
+--
+-- TOC entry 1997 (class 2606 OID 35600)
+-- Name: claves_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY claves
+    ADD CONSTRAINT claves_pkey PRIMARY KEY (id_clave);
+
+
+--
+-- TOC entry 1973 (class 2606 OID 35463)
+-- Name: clientes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY clientes
+    ADD CONSTRAINT clientes_pkey PRIMARY KEY (id_cliente);
+
+
+--
+-- TOC entry 1993 (class 2606 OID 35574)
+-- Name: detalle_fc_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY detalle_fc
+    ADD CONSTRAINT detalle_fc_pkey PRIMARY KEY (id_detalle_fc);
+
+
+--
+-- TOC entry 1991 (class 2606 OID 35554)
+-- Name: detalle_fv_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY detalle_fv
+    ADD CONSTRAINT detalle_fv_pkey PRIMARY KEY (id_detalle_fv);
+
+
+--
+-- TOC entry 1985 (class 2606 OID 35513)
+-- Name: detalle_producto_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY detalle_producto
+    ADD CONSTRAINT detalle_producto_pkey PRIMARY KEY (id_detalle_producto);
+
+
+--
+-- TOC entry 1989 (class 2606 OID 35544)
+-- Name: factura_compra_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY factura_compra
+    ADD CONSTRAINT factura_compra_pkey PRIMARY KEY (id_factura_compra);
+
+
+--
+-- TOC entry 1987 (class 2606 OID 35531)
+-- Name: factura_venta_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY factura_venta
+    ADD CONSTRAINT factura_venta_pkey PRIMARY KEY (id_factura_venta);
+
+
+--
+-- TOC entry 1981 (class 2606 OID 35492)
+-- Name: marca_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY marca
+    ADD CONSTRAINT marca_pkey PRIMARY KEY (id_marca);
+
+
+--
+-- TOC entry 1979 (class 2606 OID 35484)
+-- Name: medio_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY media
+    ADD CONSTRAINT medio_pkey PRIMARY KEY (id_media);
+
+
+--
+-- TOC entry 1983 (class 2606 OID 35500)
+-- Name: producto_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY producto
+    ADD CONSTRAINT producto_pkey PRIMARY KEY (id_producto);
+
+
+--
+-- TOC entry 1977 (class 2606 OID 35479)
+-- Name: proveedor_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY proveedor
+    ADD CONSTRAINT proveedor_pkey PRIMARY KEY (id_proveedor);
+
+
+--
+-- TOC entry 1995 (class 2606 OID 35592)
+-- Name: tipos_usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tipos_usuario
+    ADD CONSTRAINT tipos_usuario_pkey PRIMARY KEY (id_tipo_usuario);
+
+
+--
+-- TOC entry 1975 (class 2606 OID 35471)
+-- Name: usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY usuario
+    ADD CONSTRAINT usuario_pkey PRIMARY KEY (id_usuario);
+
+
+--
+-- TOC entry 2007 (class 2606 OID 35601)
+-- Name: fk_clave_usuario; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY claves
+    ADD CONSTRAINT fk_clave_usuario FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2001 (class 2606 OID 35532)
+-- Name: fk_cliente_facturaVenta; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY factura_venta
+    ADD CONSTRAINT "fk_cliente_facturaVenta" FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2005 (class 2606 OID 35575)
+-- Name: fk_facturaCompra_detalleFc; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY detalle_fc
+    ADD CONSTRAINT "fk_facturaCompra_detalleFc" FOREIGN KEY (id_factura_compra) REFERENCES factura_compra(id_factura_compra) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2003 (class 2606 OID 35560)
+-- Name: fk_facturaVenta_detalleFv; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY detalle_fv
+    ADD CONSTRAINT "fk_facturaVenta_detalleFv" FOREIGN KEY (id_factura_venta) REFERENCES factura_venta(id_factura_venta) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 1998 (class 2606 OID 35501)
+-- Name: fk_marca_producto; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY producto
+    ADD CONSTRAINT fk_marca_producto FOREIGN KEY (id_marca) REFERENCES marca(id_marca) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 1999 (class 2606 OID 35514)
+-- Name: fk_media_detalleProducto; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY detalle_producto
+    ADD CONSTRAINT "fk_media_detalleProducto" FOREIGN KEY (id_media) REFERENCES media(id_media) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2006 (class 2606 OID 35580)
+-- Name: fk_producto_detalleFc; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY detalle_fc
+    ADD CONSTRAINT "fk_producto_detalleFc" FOREIGN KEY (id_producto) REFERENCES producto(id_producto) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2004 (class 2606 OID 35565)
+-- Name: fk_producto_detalleFv; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY detalle_fv
+    ADD CONSTRAINT "fk_producto_detalleFv" FOREIGN KEY (id_producto) REFERENCES producto(id_producto) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2000 (class 2606 OID 35519)
+-- Name: fk_producto_detalleProducto; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY detalle_producto
+    ADD CONSTRAINT "fk_producto_detalleProducto" FOREIGN KEY (id_producto) REFERENCES producto(id_producto) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2002 (class 2606 OID 35545)
+-- Name: fk_proveedor_facturaCompra; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY factura_compra
+    ADD CONSTRAINT "fk_proveedor_facturaCompra" FOREIGN KEY (id_proveedor) REFERENCES proveedor(id_proveedor) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2027 (class 0 OID 0)
+-- Dependencies: 5
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2014-10-01 12:26:13
+
+--
+-- PostgreSQL database dump complete
+--
+

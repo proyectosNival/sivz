@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<?php
+  session_start();
+  session_destroy();
+?>
 <html lang="es">
   <head>
     <meta charset="utf-8">
@@ -58,14 +62,15 @@
       </div>  
       <div class="modal-body">
         <div class="form-signin">
-            <input type="text" id="txt_loginUsuarioAdmin" name="txt_loginUsuarioAdmin" class="form-control" placeholder="Usuario" required autofocus>
+            <input type="text" id="txt_loginUsuarioAdmin" name="txt_loginUsuarioAdmin" class="form-control" placeholder="Usuario Admin" required autofocus>
+            <input type="text" id="txt_loginUsuarioCambio" name="txt_loginUsuarioCambio" class="form-control" placeholder="Usuario Normal" required autofocus>
             <input type="password" id="txt_loginPassRestaurar" name="txt_loginPassRestaurar" class="form-control" placeholder="Clave Administrador" required>
             <span class="clearfix"></span>
           </div> 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-refresh"></span> Recuperar</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
+        <button type="button" class="btn btn-primary" id="btn_restautarAcceso"><span class="glyphicon glyphicon-refresh"></span> Recuperar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn_cerrarRecuperar"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
       </div>
     </div>
   </div>
