@@ -16,8 +16,10 @@
 
     <!-- Custom styles for this template -->
     <link href="../css/dashboard.css" rel="stylesheet">
+    <link href="../css/formularios.css" rel="stylesheet">
     <script src="../js/jquery-1.10.2.js"></script>
     <script src="../js/jquery-ui.js"></script>
+    <script src="../librerias/cargar_pagina.js"></script>
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -50,70 +52,69 @@
       </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid tab_index">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li><a href="#" onclick="btn_indexFacturacion()">Facturación</a></li>
-            <li><a href="#" onclick="btn_indexIngresos()">Ingresos</a></li>
-            <li><a href="#" onclick="btn_indexReportes()">Reportes</a></li>
+        <div class="col-sm-2 sidebar">
+          <ul class="nav nav-pills nav-stacked">
+            <li class="active"><a href="#tab_a" data-toggle="pill">Ingresos</a></li>
+            <li><a href="#tab_b" data-toggle="pill">Pill B</a></li>
+            <li><a href="#tab_c" data-toggle="pill">Pill C</a></li>
+            <li><a href="#tab_d" data-toggle="pill">Pill D</a></li>
           </ul>
-        </div>
-        <script>
-        function btn_indexFacturacion() 
-        {
-          var nuevoCodigoHtml = '<h1 class="page-header">Facturación</h1> <div id="tabs">'+
-          '<ul>'+
-              '<li><a href=#histopagos><span>Historial de Pagos</span></a></li>'+
-              '<li><a href=#prefacturapendiente><span>Prefacturas Pendientes</span></a></li>'+
-              '<li><a href=#suspencionteporal><span>Susp. Temporales, Req. Adicionales y Definitivas</span></a></li>'+
-              '<li><a href=#ordendesinstalacion><span>Ordenes de Trabajo</span></a></li>'+
-            '</ul>'+
-            '<div id=histopagos>'+
-            '</div>'+
-            '<div id=prefacturapendiente>'+
-            '</div>'+
-            '<div id=suspencionteporal>'+
-            '</div>'+
-            '<div id=ordendesinstalacion>'+
-            '</div>'+
-            '</div>';
-
-          document.getElementById("tablas").innerHTML=nuevoCodigoHtml;
-          /*$('#tabs').tabs();
-          "<ul>
-              <li><a href='#histopagos'><span>Historial de Pagos</span></a></li>
-              <li><a href='#prefacturapendiente'><span>Prefacturas Pendientes</span></a></li>
-              <li><a href='#suspencionteporal'><span>Susp. Temporales, Req. Adicionales y Definitivas</span></a></li>
-              <li><a href='#ordendesinstalacion'><span>Ordenes de Trabajo</span></a></li>
-            </ul>
-            <div id='histopagos'>
-            </div>
-            <div id='prefacturapendiente'>
-            </div>
-            <div id='suspencionteporal'>
-            </div>
-            <div id='ordendesinstalacion'>
-            </div>";*/
-        }
-        function btn_indexIngresos() 
-        {
-          document.getElementById("tablas").innerHTML='<iframe src="ingresos.php" frameborder="0" width="100%" height="1000px;"></iframe>';
-        }
-        function btn_indexReportes() 
-        {
-          document.getElementById("tablas").innerHTML='<iframe src="reportes.php" frameborder="0" width="100%" height="1240px"></iframe>';
-        }
-        </script>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <div id="tablas">
-          
+        </div><!-- end of container -->
+        <div class="col-sm-10 col-sm-offset-2 sidebar">
+          <div class="tab-content">
+          <div class="tab-pane active" id="tab_a">
+            <!-- tab lateral-->
+            <div class="container">
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab_ingresosClientes" data-toggle="tab">Ingreso Clientes</a></li>
+                <li><a href="#tab_bb" data-toggle="tab">Tab B</a></li>
+                <li><a href="#tab_cc" data-toggle="tab">Tab C</a></li>
+                <li><a href="#tab_dd" data-toggle="tab">Tab D</a></li>
+              </ul>
+              <div class="tab-content" >
+                <div class="tab-pane active" id="tab_ingresosClientes">
+                    
+                </div>
+                <div class="tab-pane fade" id="tab_bb">
+                    <h4>Pane B</h4>
+                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+                </div>
+                <div class="tab-pane fade" id="tab_cc">
+                    <h4>Pane C</h4>
+                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames
+                        ac turpis egestas.</p>
+                </div>
+                <div class="tab-pane fade" id="tab_dd">
+                    <h4>Pane D</h4>
+                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames
+                        ac turpis egestas.</p>
+                </div>
+              </div><!-- tab content -->
+            </div><!-- end of container -->
+            <!-- -->
           </div>
-
-        </div>
-        <script>$('#tabs').tabs();</script>
-      </div>
+          <div class="tab-pane" id="tab_b">
+            <h4>Pane B</h4>
+            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames
+                  ac turpis egestas.</p>
+          </div>
+          <div class="tab-pane" id="tab_c">
+            <h4>Pane C</h4>
+            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames
+                  ac turpis egestas.</p>
+          </div>
+          <div class="tab-pane" id="tab_d">
+            <h4>Pane D</h4>
+            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames
+                  ac turpis egestas.</p>
+          </div>
+        </div><!-- tab content -->
+        </div><!-- end of container -->
+      </div>  
     </div>
+
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -122,3 +123,4 @@
     <script src="../js/bootstrap.min.js"></script>
   </body>
 </html>
+ 

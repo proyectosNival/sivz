@@ -4,7 +4,7 @@
     	$conexion = null;
         try
         {
-         $conexion = pg_connect("host=localhost dbname=sivz port=5432 user=postgres password=postgres");
+         $conexion = pg_connect("host=localhost dbname=sivz port=5432 user=postgres password=root");
          if( $conexion == false )
                  throw new Exception( "Error PostgreSQL ".pg_last_error() );
         }

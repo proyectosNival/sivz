@@ -1,24 +1,24 @@
 .form-styles
 {
-    margin: 0;
+    margin-top: 10px;
     padding: 0;
 }
 .form-styles div{
 	font-size: 12px;
 }
 .form-styles div label{
-	text-align: left;
+	text-align: left !important;
 }
 .panel-footer.form-footer {
-	text-align: right;
 	font-size: 12px;
-	margin: 0;
-	padding: 0;
 }
 .form-footer div {
 	margin-top: 10px;
 	padding: 5px;
 	display: inline-block;
+}
+.tab_index  .sidebar{
+	display: block;
 }
 @media (max-width: 768px) {
 	.panel-footer.form-footer {

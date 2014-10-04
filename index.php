@@ -45,8 +45,8 @@
               <input type="text" id="txt_loginUsuario" name="txt_loginUsuario" class="form-control" placeholder="Usuario" required autofocus>
             </div>
             <div class="input-group">
-              <span class="input-group-addon"><span class="glyphicon glyphicon-floppy-disk"></span></span>
-              <input type="password" id="txt_loginPass" name="txt_loginPass" class="form-control" placeholder="Contraseña" required>
+              <span class ="input-group-addon"><span class="glyphicon glyphicon-floppy-disk"></span></span>
+              <input type ="password" id="txt_loginPass" name="txt_loginPass" class="form-control" placeholder="Contraseña" required>
             </div>
             <div class="form-group">
               <button class="btn btn-primary" id="btn_loginIngreso" type="submit">
