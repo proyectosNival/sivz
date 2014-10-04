@@ -21,6 +21,7 @@
     <script src="../js/jquery-ui.js"></script>
     <script src="../librerias/cargar_pagina.js"></script>
 
+
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 
@@ -75,7 +76,9 @@
               </ul>
               <div class="tab-content" >
                 <div class="tab-pane active" id="tab_ingresosClientes">
-                    
+                <?php 
+                  include 'ingresos.php';
+                ?>
                 </div>
                 <div class="tab-pane fade" id="tab_bb">
                     <h4>Pane B</h4>

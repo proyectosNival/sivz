@@ -1,7 +1,7 @@
 <?php
 	error_reporting(0);
 	function ingreso($conexion,$user){
-		$sql = "select id_usuario from usuario where nick_usuario='$user'";
+		$sql = "select id_usuario from usuario where nick_usuario='".strtolower ($user)."'";
 		$devolver = null;
 		$rs = pg_query( $conexion, $sql );
         if( pg_num_rows($rs) > 0 ){
