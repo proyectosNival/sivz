@@ -79,6 +79,7 @@
                 <?php 
                   include 'ingresos.php';
                 ?>
+
                 </div>
                 <div class="tab-pane fade" id="tab_bb">
                     <h4>Pane B</h4>
@@ -117,7 +118,26 @@
         </div><!-- end of container -->
       </div>  
     </div>
-
+    <div class="modal" id="modalBusquedas">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Búsqueda de Resgistros</h4>
+          </div>
+          <div class="modal-body">
+          <div class="table-responsive">
+            <table class="table table-bordered table-condensed table-hover" id="tabla_busquedas">
+            </table>
+          </div>
+          </div>
+          <div class="modal-footer">
+            <a href="#" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cerrar</a>
+            <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-paperclip"></span> Agregar </a>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

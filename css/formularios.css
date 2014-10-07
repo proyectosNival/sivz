@@ -20,6 +20,13 @@
 .tab_index  .sidebar{
 	display: block;
 }
+.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
+  background-color: #004080;
+  color:#eeeeee;
+}
+#modalBusquedas .table thead th{
+	text-align: center !important;
+}
 @media (max-width: 768px) {
 	.panel-footer.form-footer {
 		text-align: center;
