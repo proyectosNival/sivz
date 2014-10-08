@@ -20,9 +20,11 @@
 .tab_index  .sidebar{
 	display: block;
 }
-.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
-  background-color: #004080;
-  color:#eeeeee;
+.ui-grid{ 
+	width:100% !important; 
+}
+#modalBusquedas .ui-widget{
+	font-size: 11px;
 }
 #modalBusquedas .table thead th{
 	text-align: center !important;

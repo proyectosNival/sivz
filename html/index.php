@@ -17,11 +17,15 @@
     <!-- Custom styles for this template -->
     <link href="../css/dashboard.css" rel="stylesheet">
     <link href="../css/formularios.css" rel="stylesheet">
-    <script src="../js/jquery-1.10.2.js"></script>
+    <link href="../css/ui.jqgrid.css" rel="stylesheet">
+    <script src="../js/jquery-1.11.1.js"></script>
     <script src="../js/jquery-ui.js"></script>
     <script src="../librerias/cargar_pagina.js"></script>
-
-
+    <script src="../js/prefixfree.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.jqGrid.min.js"></script>
+    <script src="../js/grid.locale-es.js"></script>
+    <script src="../librerias/busquedas.js"></script>
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 
@@ -70,7 +74,7 @@
             <div class="container">
               <ul class="nav nav-tabs">
                 <li class="active"><a href="#tab_ingresosClientes" data-toggle="tab">Ingreso Clientes</a></li>
-                <li><a href="#tab_bb" data-toggle="tab">Tab B</a></li>
+                <li><a href="#tab_ingresoProveedores" data-toggle="tab">Ingreso de Proveedores</a></li>
                 <li><a href="#tab_cc" data-toggle="tab">Tab C</a></li>
                 <li><a href="#tab_dd" data-toggle="tab">Tab D</a></li>
               </ul>
@@ -81,9 +85,10 @@
                 ?>
 
                 </div>
-                <div class="tab-pane fade" id="tab_bb">
-                    <h4>Pane B</h4>
-                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+                <div class="tab-pane fade" id="tab_ingresoProveedores">
+                  <?php 
+                    include 'ingresos.php';
+                  ?>
                 </div>
                 <div class="tab-pane fade" id="tab_cc">
                     <h4>Pane C</h4>
@@ -123,12 +128,12 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Búsqueda de Resgistros</h4>
+            <h5 class="modal-title"><b>BÚSQUEDA DE REGISTROS</b></h5>
           </div>
           <div class="modal-body">
           <div class="table-responsive">
-            <table class="table table-bordered table-condensed table-hover" id="tabla_busquedas">
-            </table>
+            <table id="tabla_busquedas" ></table>
+            <div id="pager"></div>
           </div>
           </div>
           <div class="modal-footer">
@@ -142,8 +147,6 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
   </body>
 </html>
  

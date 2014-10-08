@@ -18,7 +18,7 @@
     <!-- Custom styles for this template -->
     <link href="css/signin.css" rel="stylesheet">
     <script type="text/javascript" src="js/prefixfree.min.js"></script>
-    <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="librerias/login.js"></script>
     <!-- Just for debugging purposes. Don't actually copy this line! -->
