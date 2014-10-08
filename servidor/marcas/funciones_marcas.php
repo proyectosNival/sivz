@@ -1,9 +1,9 @@
 <?php
 	//error_reporting(0);
-	function verificar_ci($conexion,$ci){
-		if(strlen($ci) >= 10)
+	function verificar_nombre($conexion,$nombre){
+		if(strlen($nombre) >= 1)
 		{
-			$sql="select id_cliente from clientes where ci_ruc_cliente ='$ci'";
+			$sql="select id_marca from marca where nombre_marca ='$nombre'";
 			$devolver = null;
 			$rs = pg_query( $conexion, $sql );
 	        if( pg_num_rows($rs) > 0 ){
@@ -18,10 +18,10 @@
 		}
 		return $devolver;
 	}
-	function verificar_ci_mod($conexion,$ci,$id){
-		if(strlen($ci) >= 10)
+	function verificar_nombre_mod($conexion,$nombre,$id){
+		if(strlen($nombre) >= 1)
 		{
-			$sql="select id_cliente from clientes where id_cliente not in ('$id') and ci_ruc_cliente='$ci'";
+			$sql="select id_marca from marca where id_marca not in ('$id') and nombre_marca='$nombre'";
 			$devolver = null;
 			$rs = pg_query( $conexion, $sql );
 	        if( pg_num_rows($rs) > 0 ){

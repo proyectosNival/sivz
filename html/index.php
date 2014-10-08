@@ -75,8 +75,8 @@
               <ul class="nav nav-tabs">
                 <li class="active"><a href="#tab_ingresosClientes" data-toggle="tab">Ingreso Clientes</a></li>
                 <li><a href="#tab_ingresoProveedores" data-toggle="tab">Ingreso de Proveedores</a></li>
-                <li><a href="#tab_cc" data-toggle="tab">Tab C</a></li>
-                <li><a href="#tab_dd" data-toggle="tab">Tab D</a></li>
+                <li><a href="#tab_tiposUsuarios" data-toggle="tab">Tipos de Usuarios</a></li>
+                <li><a href="#tab_marcas" data-toggle="tab">Ingreso de Marcas</a></li>
               </ul>
               <div class="tab-content" >
                 <div class="tab-pane active" id="tab_ingresosClientes">
@@ -87,18 +87,18 @@
                 </div>
                 <div class="tab-pane fade" id="tab_ingresoProveedores">
                   <?php 
-                    include 'ingresos.php';
+                    include 'form_proveedores.php';
                   ?>
                 </div>
-                <div class="tab-pane fade" id="tab_cc">
-                    <h4>Pane C</h4>
-                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames
-                        ac turpis egestas.</p>
+                <div class="tab-pane fade" id="tab_tiposUsuarios">
+                  <?php
+                    include 'form_tipos_usuarios.php';
+                  ?>
                 </div>
-                <div class="tab-pane fade" id="tab_dd">
-                    <h4>Pane D</h4>
-                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames
-                        ac turpis egestas.</p>
+                <div class="tab-pane fade" id="tab_marcas">
+                  <?php
+                    include 'form_marcas.php';
+                  ?>
                 </div>
               </div><!-- tab content -->
             </div><!-- end of container -->
@@ -131,14 +131,11 @@
             <h5 class="modal-title"><b>BÚSQUEDA DE REGISTROS</b></h5>
           </div>
           <div class="modal-body">
-          <div class="table-responsive">
-            <table id="tabla_busquedas" ></table>
-            <div id="pager"></div>
+          <div class="table-responsive" id="busquedasModificar">
           </div>
           </div>
           <div class="modal-footer">
-            <a href="#" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cerrar</a>
-            <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-paperclip"></span> Agregar </a>
+            <a href="#" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" id="cerrarVentana"></span> Cerrar</a>
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@
 	function verificar_ci($conexion,$ci){
 		if(strlen($ci) >= 10)
 		{
-			$sql="select id_cliente from clientes where ci_ruc_cliente ='$ci'";
+			$sql="select id_proveedor from proveedor where ci_ruc_proveedor ='$ci'";
 			$devolver = null;
 			$rs = pg_query( $conexion, $sql );
 	        if( pg_num_rows($rs) > 0 ){
@@ -21,7 +21,7 @@
 	function verificar_ci_mod($conexion,$ci,$id){
 		if(strlen($ci) >= 10)
 		{
-			$sql="select id_cliente from clientes where id_cliente not in ('$id') and ci_ruc_cliente='$ci'";
+			$sql="select id_proveedor from proveedor where id_proveedor not in ('$id') and ci_ruc_proveedor='$ci'";
 			$devolver = null;
 			$rs = pg_query( $conexion, $sql );
 	        if( pg_num_rows($rs) > 0 ){

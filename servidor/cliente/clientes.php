@@ -1,6 +1,7 @@
 <?php
 	include '../conexion.php';
 	include 'funciones_cliente.php';
+	include '../funciones_generales.php';
 	$data;
 	$conexion = conectarse();
 	if($_POST['tipo'] == "g"){
