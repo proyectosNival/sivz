@@ -3,34 +3,53 @@ function inicio(){
 	/*formulario de clientes */
 	$("#btn_guardarCliente").on("click",guardarIngresos);
 	$("#btn_limpiarIngreso").on("click",limpiar_form);
-	$("#btn_buscarCliente").on("click",modal)
+	$("#btn_buscarCliente").on("click",modal);
 	/*-----------------------*/
 	/*formulario de proveedores */
 	$("#btn_guardarProveedor").on("click",guardarProveedores);
 	$("#btn_limpiarProveedor").on("click",limpiar_form);
-	$("#btn_buscarProveedor").on("click",modal)
+	$("#btn_buscarProveedor").on("click",modal);
 	/*-----------------------*/
 	/*formulario de tipos de usuarios */
 	$("#btn_guardarTipoUsuario").on("click",guardarTiposUsuarios);
 	$("#btn_limpiarTipoUsuario").on("click",limpiar_form);
-	$("#btn_buscarTipoUsuario").on("click",modal)
+	$("#btn_buscarTipoUsuario").on("click",modal);
 	/*-----------------------*/
 	/*formulario de tipos de usuarios */
 	$("#btn_guardarMarca").on("click",guardarMarcas);
 	$("#btn_limpiarMarca").on("click",limpiar_form);
-	$("#btn_buscarMarca").on("click",modal)
+	$("#btn_buscarMarca").on("click",modal);
 	/*-----------------------*/
+	/*Incrementos*/
+	$("#btn_guardarMedia").on("click",guardarMedia);
+	$("#btn_limpiarMedia").on("click",limpiar_form);
+	$("#btn_buscarMedia").on("click",modal);
+	/*-----------------------*/
+	/*Usuarios*/
+	$("#form_clave").css("display","block");
+	$("#form_usuario").css("display","none");
+	$("#btn_ingresarAdmin").on("click",verificarAdmin);	
+	$("#tab_user").click(function (e){
+		$("#form_clave").css("display","block");
+		$("#form_usuario").css("display","none");
+		$("#usuario_admin").val("");
+		$("#clave_admin").val("");
+	});
+	$("#tipo_usuario").load("../servidor/tipos_usuarios/cargar_tiposUsuarios.php");
+	$("#btn_guardarUsuario").on("click",guardarUsuario);
+	$("#btn_limpiarUsuario").on("click",limpiar_form);
+	$("#btn_buscarUsuario").on("click",modal);
+	/**----------------------/
 	/*tooltips en los inputs*/
 	$("input").tooltip({
        placement : 'top'
 	});
 	/*-----------------------*/
 	/*validacion del form para todos los input que tengan required*/
-	$("input").keyup(function (e){
+	$("input").on("keyup click",function (e){
 		comprobarCamposRequired(e.currentTarget.form.id)
 	});
 	/*-----------------------*/
-
 }
 function modal(e){
 	$("#busquedasModificar").html("");
@@ -55,6 +74,14 @@ function modal(e){
 			}else{
 				if(form == "form_marcas"){
 					buscar_marcas();
+				}else{
+					if(form == "form_calculoPrecio"){
+						buscar_media();
+					}else{
+						if(form == "form_usuarios"){
+							buscar_usuario();
+						}
+					}
 				}	
 			}
 		}
@@ -246,6 +273,125 @@ function datos_marcas(valores,tipo,p){
 		}
 	}); 
 }
+function guardarMedia(){
+	var resp=comprobarCamposRequired("form_calculoPrecio");
+	if(resp==true){
+		$("#form_calculoPrecio").on("submit",function (e){		
+			var valores = $("#form_calculoPrecio").serialize();
+			var texto=($("#btn_guardarMedia").text()).trim();	
+			if(texto=="Guardar"){		
+				datos_media(valores,"g",e);
+			}else{
+				datos_media(valores,"m",e);
+			}
+			e.preventDefault();
+    		$(this).unbind("submit")
+		});
+	}
+}
+function datos_media(valores,tipo,p){
+	$.ajax({				
+		type: "POST",
+		data: valores+"&tipo="+tipo,
+		url: "../servidor/media/media.php",			
+	    success: function(data) {	
+	    	if( data == 0 ){
+	    		alert("Datos enviados Correctamente");
+	    		limpiar_form(p);
+	    	}
+	    	if( data == 3 ){
+	    		alert("Complete todos los campos antes de continuar");	
+	    	}
+		}
+	}); 
+}
+
+function guardarUsuario(){
+	var resp=comprobarCamposRequired("form_usuarios");
+	if(resp==true){
+		$("#form_usuarios").on("submit",function (e){		
+			var valores = $("#form_usuarios").serialize();
+			var texto=($("#btn_guardarUsuario").text()).trim();	
+			if(texto=="Guardar"){		
+				datos_usuario(valores,"g",e);
+			}else{
+				datos_usuario(valores,"m",e);
+			}
+			e.preventDefault();
+    		$(this).unbind("submit")
+		});
+	}
+}
+function datos_usuario(valores,tipo,p){
+	$.ajax({				
+		type: "POST",
+		data: valores+"&tipo="+tipo,
+		url: "../servidor/usuarios/usuarios.php",			
+	    success: function(data) {	
+	    	if( data == 0 ){
+	    		alert("Datos enviados Correctamente");
+	    		limpiar_form(p);
+	    	}
+	    	if( data == 1 ){
+	    		$("#ci_usuario").parent().removeClass('has-success');
+	    		$("#ci_usuario").parent().addClass('has-error');
+	    		alert("Este número de cédula ya existe ingrese otra");	
+	    		$("#ci_usuario").val("");
+	    		$("#ci_usuario").focus();
+	    	}
+	    	if( data == 2 ){
+	    		alert("Este valor esta incompleto");	
+	    		$("#ci_usuario").val("");
+	    		$("#ci_usuario").focus();
+	    		$("#ci_usuario").parent().removeClass('has-success');
+	    		$("#ci_usuario").parent().addClass('has-error');
+	    	}
+	    	if( data == 3 ){
+	    		alert("Complete todos los campos antes de continuar");	
+	    	}
+	    	if( data == 4 ){
+	    		alert("Este nick ya existe ingrese otro");	
+	    		$("#nick_usuario").val("");
+	    		$("#nick_usuario").focus();
+	    		$("#nick_usuario").parent().removeClass('has-success');
+	    		$("#nick_usuario").parent().addClass('has-error');
+	    	}
+	    	if( data == 5 ){
+	    		alert("Este valor esta incompleto");	
+	    		$("#nick_usuario").val("");
+	    		$("#nick_usuario").focus();
+	    		$("#nick_usuario").parent().removeClass('has-success');
+	    		$("#nick_usuario").parent().addClass('has-error');
+	    	}
+		}
+	}); 
+}
+
+function verificarAdmin(){
+	var user =$("#usuario_admin").val();
+	var clave =$("#clave_admin").val();
+	$.ajax({				
+		type: "POST",
+		data: "usuario="+user+"&clave="+clave,
+		url: "../servidor/login/verifica_admin.php",			
+	    success: function(data) {	
+	    	if( data == 1 ){
+	    		alert("Datos Correctos");
+	    		$("#form_clave").css("display","none");
+				$("#form_usuario").css("display","block");
+	    	}
+	    	if( data == 2){
+	    		alert("Datos incorrectos vuelva a ingresarlos");
+	    		$("#usuario_admin").val("");
+	    		$("#usuario_admin").focus();
+				$("#clave_admin").val("");
+	    	}
+	    	if( data == 3 ){
+	    		alert("Complete todos los campos antes de continuar");	
+	    	}
+		}
+	}); 	
+}
 function limpiar_form(e){
 	var form;
 	if(e.type == "click"){
@@ -272,6 +418,16 @@ function limpiar_form(e){
 				if(form == "form_marcas"){
 					$("#btn_guardarMarca").text("");
 					$("#btn_guardarMarca").append("<span class='glyphicon glyphicon-log-in'></span> Guardar");     		
+				}else{
+					if(form == "form_calculoPrecio"){
+						$("#btn_guardarMedia").text("");
+						$("#btn_guardarMedia").append("<span class='glyphicon glyphicon-log-in'></span> Guardar");     		
+					}else{
+						if(form == "form_usuarios"){
+							$("#btn_guardarUsuario").text("");
+							$("#btn_guardarUsuario").append("<span class='glyphicon glyphicon-log-in'></span> Guardar");     		
+						}
+					}
 				}	
 			}
 		}
@@ -280,8 +436,8 @@ function limpiar_form(e){
 
 function comprobarCamposRequired(form){
    	var correcto=true;
-   	var campos=$('#'+form+' input[type="text"]:required');
-   	$(campos).each(function() {
+   	var campos_text=$('#'+form+' input:required');
+   	$(campos_text).each(function() {
 	   	var pattern = new RegExp("^" + $(this)[0].pattern + "$");
       	if($(this).val() != '' && pattern.test($(this).val())){
 	        $(this).parent().removeClass('has-error');

@@ -1,6 +1,6 @@
 <form class="form-horizontal " action="" rol="form" id="form_marcas" method="post">
    <div class="panel panel-default">
-     <div class="panel-heading"><span class="glyphicon glyphicon-user"></span> <b> Ingresos de Marcas </b></div>
+     <div class="panel-heading"><span class="glyphicon glyphicon-th"></span> <b> Ingresos de Marcas </b></div>
        <div class="panel-body form-styles">
          <div class="container">
            <div class="form-group col-md-6">

@@ -62,9 +62,10 @@
         <div class="col-sm-2 sidebar">
           <ul class="nav nav-pills nav-stacked">
             <li class="active"><a href="#tab_a" data-toggle="pill">Ingresos</a></li>
-            <li><a href="#tab_b" data-toggle="pill">Pill B</a></li>
-            <li><a href="#tab_c" data-toggle="pill">Pill C</a></li>
-            <li><a href="#tab_d" data-toggle="pill">Pill D</a></li>
+            <li><a href="#tab_b" data-toggle="pill">Factura Compra</a></li>
+            <li><a href="#tab_c" data-toggle="pill">Factura Venta</a></li>
+            <li><a href="#tab_d" data-toggle="pill">Inventario</a></li>
+            <li><a href="#tab_d" data-toggle="pill">Reportes</a></li>
           </ul>
         </div><!-- end of container -->
         <div class="col-sm-10 col-sm-offset-2 sidebar">
@@ -77,6 +78,8 @@
                 <li><a href="#tab_ingresoProveedores" data-toggle="tab">Ingreso de Proveedores</a></li>
                 <li><a href="#tab_tiposUsuarios" data-toggle="tab">Tipos de Usuarios</a></li>
                 <li><a href="#tab_marcas" data-toggle="tab">Ingreso de Marcas</a></li>
+                <li><a href="#tab_calculoPrecio" data-toggle="tab">Cálculo de Precios</a></li>
+                <li id="tab_user"><a href="#tab_usuarios" data-toggle="tab">Ingreso de usuarios</a></li>
               </ul>
               <div class="tab-content" >
                 <div class="tab-pane active" id="tab_ingresosClientes">
@@ -98,6 +101,16 @@
                 <div class="tab-pane fade" id="tab_marcas">
                   <?php
                     include 'form_marcas.php';
+                  ?>
+                </div>
+                <div class="tab-pane fade" id="tab_calculoPrecio">
+                  <?php
+                    include 'form_calculoPrecio.php';
+                  ?>
+                </div>
+                <div class="tab-pane fade" id="tab_usuarios">
+                  <?php
+                    include 'form_usuarios.php';
                   ?>
                 </div>
               </div><!-- tab content -->
