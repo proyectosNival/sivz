@@ -29,8 +29,15 @@
 #modalBusquedas .table thead th{
 	text-align: center !important;
 }
+#agregar_productos input{
+	width:50%;
+}
+#agregar_productos button{
+	width:30%;
+}
 @media (max-width: 768px) {
 	.panel-footer.form-footer {
 		text-align: center;
 	}	
+	
 }

@@ -62,7 +62,7 @@
         <div class="col-sm-2 sidebar">
           <ul class="nav nav-pills nav-stacked">
             <li class="active"><a href="#tab_a" data-toggle="pill">Ingresos</a></li>
-            <li><a href="#tab_b" data-toggle="pill">Factura Compra</a></li>
+            <li><a href="#tab_b" data-toggle="pill">Ingreso de Productos</a></li>
             <li><a href="#tab_c" data-toggle="pill">Factura Venta</a></li>
             <li><a href="#tab_d" data-toggle="pill">Inventario</a></li>
             <li><a href="#tab_d" data-toggle="pill">Reportes</a></li>
@@ -118,9 +118,9 @@
             <!-- -->
           </div>
           <div class="tab-pane" id="tab_b">
-            <h4>Pane B</h4>
-            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames
-                  ac turpis egestas.</p>
+            <?php
+              include 'form_productos.php';
+            ?>
           </div>
           <div class="tab-pane" id="tab_c">
             <h4>Pane C</h4>

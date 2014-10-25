@@ -19,13 +19,13 @@
            <div class="form-group col-md-6">
              <label class="col-sm-3 control-label" for='telefono_cliente'>Télefono</label>
              <div class="col-sm-9">
-               <input type="text" class="form-control" id='telefono_cliente' name="telefono_cliente" data-toggle="tooltip" data-original-title="Solo Números." pattern="[0-9]{1,}">  
+               <input type="text" class="form-control" id='telefono_cliente' name="telefono_cliente" data-toggle="tooltip" data-original-title="Solo Números.">  
              </div>
            </div>
            <div class="form-group col-md-6">
              <label class="col-sm-3 control-label" for='celular_cliente'>Celular</label>
              <div class="col-sm-9">
-               <input type="text" class="form-control" id='celular_cliente' name="celular_cliente" data-toggle="tooltip" data-original-title="Solo Números." pattern="[0-9]{1,}">  
+               <input type="text" class="form-control" id='celular_cliente' name="celular_cliente" data-toggle="tooltip" data-original-title="Solo Números.">  
              </div>
            </div>
            <div class="form-group col-md-6">
