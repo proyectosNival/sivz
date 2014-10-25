@@ -3,7 +3,7 @@
      <div class="panel-heading"><span class="glyphicon glyphicon-usd"></span> <b> Cálculo de Precios </b></div>
        <div class="panel-body form-styles">
          <div class="container">
-           <div class="form-group col-md-6">
+           <div class="form-group col-md-5">
              <label class="col-sm-3 control-label" for='precio_inicial'>Desde:</label>
              <div class="col-sm-9">
                 <div class="input-group has-error">
@@ -13,7 +13,7 @@
                 </div>
              </div>
            </div>
-           <div class="form-group col-md-6">
+           <div class="form-group col-md-5">
               <label class="col-sm-3 control-label" for='precio_final'>Hasta:</label>
                 <div class="col-sm-9">
                   <div class="input-group has-error">
@@ -22,7 +22,7 @@
                   </div>
               </div>
            </div>
-           <div class="form-group col-md-6">
+           <div class="form-group col-md-5">
               <label class="col-sm-3 control-label" for='incremento'>Incremento:</label>
               <div class="col-sm-9">
                 <div class="input-group has-error">

@@ -3,7 +3,7 @@
      <div class="panel-heading"><span class="glyphicon glyphicon-th"></span> <b> Ingresos de Marcas </b></div>
        <div class="panel-body form-styles">
          <div class="container">
-           <div class="form-group col-md-6">
+           <div class="form-group col-md-5">
              <label class="col-sm-3 control-label" for='nombre_marca'>Marcas</label>
              <div class="col-sm-9 has-error">
                <input type="hidden" class="form-control" id='id_marca' name="id_marca" >  
