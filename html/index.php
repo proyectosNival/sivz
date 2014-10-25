@@ -57,61 +57,44 @@
       </div>
     </div>
 
-    <div class="container-fluid tab_index">
+    <div class="container-fluid ">
       <div class="row">
-        <div class="col-sm-2 sidebar">
+        <div class="col-sm-2 sidebar tab_index">
           <ul class="nav nav-pills nav-stacked">
+<<<<<<< HEAD
             <li class="active"><a href="#tab_a" data-toggle="pill">Ingresos</a></li>
             <li><a href="#tab_b" data-toggle="pill">Ingreso de Productos</a></li>
             <li><a href="#tab_c" data-toggle="pill">Factura Venta</a></li>
             <li><a href="#tab_d" data-toggle="pill">Inventario</a></li>
             <li><a href="#tab_d" data-toggle="pill">Reportes</a></li>
+=======
+            <li class="active"><a href="#tab_a">Ingresos</a></li>
+            <li><a href="#tab_b">Productos</a></li>
+            <li><a href="#tab_c">Factura Venta</a></li>
+            <li><a href="#tab_d">Inventario</a></li>
+            <li><a href="#tab_e">Reportes</a></li>
+>>>>>>> 96f963c212575168a5791e748ca38fb287934259
           </ul>
         </div><!-- end of container -->
         <div class="col-sm-10 col-sm-offset-2 sidebar">
-          <div class="tab-content">
-          <div class="tab-pane active" id="tab_a">
-            <!-- tab lateral-->
-            <div class="container">
-              <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab_ingresosClientes" data-toggle="tab">Ingreso Clientes</a></li>
-                <li><a href="#tab_ingresoProveedores" data-toggle="tab">Ingreso de Proveedores</a></li>
-                <li><a href="#tab_tiposUsuarios" data-toggle="tab">Tipos de Usuarios</a></li>
-                <li><a href="#tab_marcas" data-toggle="tab">Ingreso de Marcas</a></li>
-                <li><a href="#tab_calculoPrecio" data-toggle="tab">Cálculo de Precios</a></li>
-                <li id="tab_user"><a href="#tab_usuarios" data-toggle="tab">Ingreso de usuarios</a></li>
-              </ul>
-              <div class="tab-content" >
-                <div class="tab-pane active" id="tab_ingresosClientes">
-                <?php 
-                  include 'ingresos.php';
-                ?>
-
-                </div>
-                <div class="tab-pane fade" id="tab_ingresoProveedores">
+          <div class="tab-content content_index">
+            <div class="tab-pane active act" id="tab_a">
+              <!-- tab lateral-->
+              <div class="container">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a href="#tab_ingresosClientes" data-toggle="tab">Ingreso Clientes</a></li>
+                  <li><a href="#tab_ingresoProveedores" data-toggle="tab">Ingreso de Proveedores</a></li>
+                  <li><a href="#tab_tiposUsuarios" data-toggle="tab">Tipos de Usuarios</a></li>
+                  <li><a href="#tab_marcas" data-toggle="tab">Ingreso de Marcas</a></li>
+                  <li><a href="#tab_calculoPrecio" data-toggle="tab">Cálculo de Precios</a></li>
+                  <li id="tab_user"><a href="#tab_usuarios" data-toggle="tab">Ingreso de usuarios</a></li>
+                </ul>
+                <div class="tab-content" >
+                  <div class="tab-pane active" id="tab_ingresosClientes">
                   <?php 
-                    include 'form_proveedores.php';
+                    include 'ingresos.php';
                   ?>
-                </div>
-                <div class="tab-pane fade" id="tab_tiposUsuarios">
-                  <?php
-                    include 'form_tipos_usuarios.php';
-                  ?>
-                </div>
-                <div class="tab-pane fade" id="tab_marcas">
-                  <?php
-                    include 'form_marcas.php';
-                  ?>
-                </div>
-                <div class="tab-pane fade" id="tab_calculoPrecio">
-                  <?php
-                    include 'form_calculoPrecio.php';
-                  ?>
-                </div>
-                <div class="tab-pane fade" id="tab_usuarios">
-                  <?php
-                    include 'form_usuarios.php';
-                  ?>
+<<<<<<< HEAD
                 </div>
               </div><!-- tab content -->
             </div><!-- end of container -->
@@ -133,6 +116,54 @@
                   ac turpis egestas.</p>
           </div>
         </div><!-- tab content -->
+=======
+
+                  </div>
+                  <div class="tab-pane " id="tab_ingresoProveedores">
+                    <?php 
+                      include 'form_proveedores.php';
+                    ?>
+                  </div>
+                  <div class="tab-pane " id="tab_tiposUsuarios">
+                    <?php
+                      include 'form_tipos_usuarios.php';
+                    ?>
+                  </div>
+                  <div class="tab-pane " id="tab_marcas">
+                    <?php
+                      include 'form_marcas.php';
+                    ?>
+                  </div>
+                  <div class="tab-pane " id="tab_calculoPrecio">
+                    <?php
+                      include 'form_calculoPrecio.php';
+                    ?>
+                  </div>
+                  <div class="tab-pane " id="tab_usuarios">
+                    <?php
+                      include 'form_usuarios.php';
+                    ?>
+                  </div>
+                </div><!-- tab content -->
+              </div><!-- end of container -->
+              <!-- -->
+            </div>
+            <div class="tab-pane act" id="tab_b">
+              <?php
+                include 'form_productos.php';
+              ?>
+            </div>
+            <div class="tab-pane act" id="tab_c">
+             
+            </div>
+            <div class="tab-pane act" id="tab_d">
+              
+            </div>
+            <div class="tab-pane act" id="tab_e">
+              
+            </div>
+          </div><!-- tab content -->
+>>>>>>> 96f963c212575168a5791e748ca38fb287934259
         </div><!-- end of container -->
       </div>  
     </div>

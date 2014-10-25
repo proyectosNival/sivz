@@ -45,7 +45,35 @@ function inicio(){
        placement : 'top'
 	});
 	/*-----------------------*/
-	/*validacion del form para todos los input que tengan required*/
+	/*validacion del form para todos los input que tengan required y cambios en los tabs*/
+	var tab = window.location.hash.substring(1); 
+	if(tab){
+		$('.tab_index ul li').each(function(){
+		    $(this).removeClass("active");
+		    var href= $(this).children()[0].href
+		    var tab1 = href.split('#').pop();
+		    if( tab1 == tab){
+		    	$(this).addClass("active");	
+		    }
+		});
+		$('.act').each(function(){
+			$(this).removeClass("active");
+		});
+		$("#"+tab).addClass("active");
+	}
+	/*activar contenido de las listas*/
+	$('.tab_index a').on('click', function(e){
+	  	var href = $(this).attr('href');
+		var tab = href.split('#').pop();
+		$('.tab_index ul li').each(function(){
+	    	$(this).removeClass("active");
+		});
+		$(this).parent().addClass("active");
+		$('.act').each(function(){
+			$(this).removeClass("active");
+		});
+		$("#"+tab).addClass("active");
+	});
 	$("input").on("keyup click",function (e){
 		comprobarCamposRequired(e.currentTarget.form.id)
 	});
@@ -436,7 +464,7 @@ function limpiar_form(e){
 
 function comprobarCamposRequired(form){
    	var correcto=true;
-   	var campos_text=$('#'+form+' input:required');
+   	var campos_text=$('#'+form+' input:required ');
    	$(campos_text).each(function() {
 	   	var pattern = new RegExp("^" + $(this)[0].pattern + "$");
       	if($(this).val() != '' && pattern.test($(this).val())){
