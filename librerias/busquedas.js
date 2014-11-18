@@ -465,3 +465,126 @@ function buscar_productos(){
     jQuery("#tabla_busquedas").jqGrid('hideCol', "id_marca");
     //jQuery("#tabla_busquedas").jqGrid('setFrozenColumns');
 }
+function fc (){
+    jQuery("#list").jqGrid({
+        datatype: "local",
+        colNames: ['', 'ID', 'Código', 'Detalle', 'Cantidad', 'Precio. U', 'Precio V', 'Total'],
+        colModel: [
+            {name: 'myac', width: 50, fixed: true, sortable: false, resize: false, formatter: 'actions',
+                formatoptions: {keys: false, delbutton: true, editbutton: false}
+            },
+            {name: 'id_producto_fc', index: 'id_producto_fc', editable: false, search: false, hidden: true, editrules: {edithidden: false}, align: 'center', frozen: true, width: 50},
+            {name: 'cod_prod_fc', index: 'cod_prod_fc', editable: false, search: false, hidden: false, editrules: {edithidden: false}, align: 'center', frozen: true, width: 100},
+            {name: 'nombre_prod_fc', index: 'nombre_prod_fc', editable: false, frozen: true, editrules: {required: true}, align: 'center', width: 290},
+            {name: 'cantidad_fc', index: 'cantidad_fc', editable: true, frozen: true, editrules: {required: true}, align: 'center', width: 70, editoptions:{maxlength: 10, size:15,dataInit: function(elem){$(elem).bind("keypress", function(e) {return numeros(e)})}}}, 
+            {name: 'precio_compra_fc', index: 'precio_compra_fc', editable: true, search: false, frozen: true, editrules: {required: true}, align: 'center', width: 110, editoptions:{maxlength: 10, size:15,dataInit: function(elem){$(elem).bind("keypress", function(e) {return punto(e)})}}}, 
+            {name: 'precio_venta_fc', index: 'precio_venta_fc', editable: true, frozen: true, editrules: {required: true}, align: 'center', width: 70,editoptions:{maxlength: 10, size:15,dataInit: function(elem){$(elem).bind("keypress", function(e) {return punto(e)})}}},            
+            {name: 'total_fc', index: 'total_fc', editable: false, frozen: true, editrules: {required: true}, align: 'center', width: 70},            
+        ],
+        rowNum: 30,
+        shrinkToFit: true,
+        autowidth: true,
+        sortable: true,
+        rowList: [10, 20, 30],
+        pager: jQuery('#pager'),
+        sortname: 'id_producto_fc',
+        sortorder: 'asc',
+        viewrecords: true,
+        cellEdit: true,
+        cellsubmit: 'clientArray',
+        delOptions: {
+            modal: true,
+            jqModal: true,
+            onclickSubmit: function(rp_ge, rowid) {
+                var id = jQuery("#list").jqGrid('getGridParam', 'selrow');
+                jQuery('#list').jqGrid('restoreRow', id);
+                var ret = jQuery("#list").jqGrid('getRowData', id);
+                rp_ge.processing = true;
+                var su = jQuery("#list").jqGrid('delRowData', rowid);                                
+                var total = 0;
+                var iva = 0 ;
+                var subtotal = 0;                
+                if (su === true) {                                                                
+                    total = ($("#total_fc").val() - ret.total_fc).toFixed(2);                    
+                    iva = parseFloat(total * 0.12).toFixed(2);                    
+                    subtotal = parseFloat(total - iva).toFixed(2);                                        
+                    $("#total_fc").val(total);                    
+                    $("#iva_12").val(iva);
+                    $("#subtotal").val(subtotal);
+                }
+                $(".ui-icon-closethick").trigger('click');
+                //$("#delmodlist").hide();
+                return true;
+            },
+            processing: true
+        },
+        afterSaveCell : function(rowid,name,val,iRow,iCol) {
+            var subtotal = 0;
+            var iva = 0;
+            var total = 0;            
+            var id = jQuery("#list").jqGrid('getGridParam', 'selrow');
+            jQuery('#list').jqGrid('restoreRow', id);
+            var ret = jQuery("#list").jqGrid('getRowData', id);
+
+            if(name == 'cantidad_fc') {
+               var precio_fc = jQuery("#list").jqGrid('getCell',rowid,iCol+1);               
+               var operacion = (parseFloat(val) * parseFloat(precio_fc)).toFixed(2); 
+               jQuery("#list").jqGrid('setRowData',rowid,{total_fc: operacion });
+               
+                                   
+                var fil = jQuery("#list").jqGrid("getRowData");                        
+                for (var t = 0; t < fil.length; t++) {
+                    dd = fil[t];                            
+                    subtotal = (subtotal + parseFloat(dd['total_fc']));                
+                }
+                subtotal = parseFloat(subtotal).toFixed(2);                            
+                iva = parseFloat(subtotal * 0.12).toFixed(2);
+                total = subtotal - iva;
+                $("#subtotal").val(total);
+                $("#descuento").val("0");
+                $("#iva_12").val(iva);
+                $("#total_fc").val(subtotal);               
+              
+            }else{
+                if(name == 'precio_compra_fc') {
+                   var cantidad = jQuery("#list").jqGrid('getCell',rowid,iCol-1);                   
+                   var operacion = (parseFloat(val) * parseFloat(cantidad)).toFixed(2); 
+                   jQuery("#list").jqGrid('setRowData',rowid,{total_fc: operacion });                                                          
+                    var fil = jQuery("#list").jqGrid("getRowData");                        
+                    for (var t = 0; t < fil.length; t++) {
+                        dd = fil[t];                            
+                        subtotal = (subtotal + parseFloat(dd['total_fc']));                
+                    }
+                    subtotal = parseFloat(subtotal).toFixed(2);                            
+                    iva = parseFloat(subtotal * 0.12).toFixed(2);
+                    total = subtotal - iva;
+                    $("#subtotal").val(total);
+                    $("#descuento").val("0");
+                    $("#iva_12").val(iva);
+                    $("#total_fc").val(subtotal);               
+                  
+                }else{
+                    if(name == 'precio_compra_fc') {
+                       var cantidad = jQuery("#list").jqGrid('getCell',rowid,iCol-1);                   
+                       var operacion = (parseFloat(val) * parseFloat(cantidad)).toFixed(2); 
+                       jQuery("#list").jqGrid('setRowData',rowid,{total_fc: operacion });                                                          
+                        var fil = jQuery("#list").jqGrid("getRowData");                        
+                        for (var t = 0; t < fil.length; t++) {
+                            dd = fil[t];                            
+                            subtotal = (subtotal + parseFloat(dd['total_fc']));                
+                        }
+                        subtotal = parseFloat(subtotal).toFixed(2);                            
+                        iva = parseFloat(subtotal * 0.12).toFixed(2);
+                        total = subtotal - iva;
+                        $("#subtotal").val(total);
+                        $("#descuento").val("0");
+                        $("#iva_12").val(iva);
+                        $("#total_fc").val(subtotal);               
+                      
+                    }    
+                }
+            }
+        }
+    });
+
+}

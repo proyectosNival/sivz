@@ -46,7 +46,7 @@ function inicio(){
 	$("#btn_limpiarProducto").on("click",limpiar_form);
 	$("#btn_buscarProducto").on("click",modal);
 	/*-----------------------*/
-	/*formulario de productos */
+	/*formulario de fc */
 	$("#ci_proveedor_fc").keyup(function (){
 		autocompletar("ci_proveedor_fc","nombre_proveedor_fc","id_proveedor_fc","../servidor/factura_compra/buscar_proveedor.php?tipo=0","form_facturaCompra");
 	});
@@ -62,7 +62,25 @@ function inicio(){
 	$("#btn_guardarProducto").on("click",guardarProducto);
 	$("#btn_limpiarProducto").on("click",limpiar_form);
 	$("#btn_buscarProducto").on("click",modal);
-	/*-----------------------*/
+	/*funcion solu numeros*/
+	$(".soloNumeros").keyup(function(event){
+	    if((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode == 9) || (event.keyCode == 116) || (event.keyCode == 8) || (event.keyCode >= 96 && event.keyCode <= 105) || (event.keyCode == 110) || (event.keyCode == 190)) {
+	        return true;
+	    }else{
+	    	return false;
+	    }
+	});
+	/*-------------*/
+	$("#cod_prod_fc").on("keypress", enter);
+	$("#nombre_prod_fc").on("keypress", enter);
+	$("#cantidad_fc").on("keypress", enter);
+	$("#precio_compra_fc").on("keypress", enter);
+	$("#precio_venta_fc").on("keypress", enter);
+	$("#cantidad_fc").on("keypress",punto);
+	$("#precio_compra_fc").on("keypress",punto);
+	$("#precio_venta_fc").on("keypress",punto);
+	fc($("#list"));
+	/*--------------*/
 	/*tooltips en los inputs*/
 	$("input").tooltip({
        placement : 'top'
@@ -577,3 +595,156 @@ function autocompletar(campo,campoNombre,campoId,direccion,form){
     };
 }
 /*---------------*/
+/*funcion numerico*/
+function punto(e){
+ 	var key;
+	if (window.event)
+	{
+	    key = e.keyCode;
+	}
+	else if (e.which)
+	{
+	    key = e.which;
+	}
+
+	if (key < 48 || key > 57)
+	{
+	    if (key === 46 || key === 8)
+	    {
+	        return true;
+	    }
+	    else
+	    {
+	        return false;
+	    }
+	}
+	return true;   
+}
+/*--------*/
+function numeros(e) { 
+	tecla = (document.all) ? e.keyCode : e.which;
+	if (tecla==8) return true;
+	patron = /\d/;
+	te = String.fromCharCode(tecla);
+return patron.test(te);
+}
+function enter(e) {
+    if (e.which === 13 || e.keyCode === 13) {
+        comprobarVacios("cod_prod_fc","nombre_prod_fc","cantidad_fc","precio_compra_fc","precio_venta_fc")
+        return false;
+    }
+    return true;
+}
+function comprobarVacios(id1,id2,id3,id4,id5){
+	if($("#"+id1).val() == ""){
+		alert("Ingrese un código de producto");
+		$("#"+id1).focus();
+	}else{
+		if($("#"+id2).val() == ""){
+			alert("Ingrese un nombre de producto");
+			$("#"+id2).focus()
+		}else{
+			if($("#"+id3).val() == ""){
+				alert("Ingrese una cantidad");
+				$("#"+id3).focus()
+			}else{
+				if($("#"+id4).val() == ""){
+					alert("Ingrese un precio de compra");
+					$("#"+id4).focus()
+				}else{
+					if($("#"+id5).val() == ""){
+						alert("Ingrese un precio de venta");
+						$("#"+id5).focus()
+					}else{
+						var filas = jQuery("#list").jqGrid("getRowData");
+						if (filas.length === 0) {                            
+                        	var datarow = {
+                                id_producto_fc: $("#id_producto_fc").val(), 
+                                cod_prod_fc: $("#cod_prod_fc").val(), 
+                                nombre_prod_fc: $("#nombre_prod_fc").val(), 
+                                cantidad_fc: $("#cantidad_fc").val(), 
+                                precio_compra_fc: $("#precio_compra_fc").val(), 
+                                precio_venta_fc: $("#precio_venta_fc").val(), 
+                                total_fc: (parseFloat($("#precio_compra_fc").val() * $("#cantidad_fc").val())).toFixed(2), 
+                            };
+                            su = jQuery("#list").jqGrid('addRowData', $("#id_producto_fc").val(), datarow);
+                            ////////limpiar///////////
+                            $("#id_producto_fc").val("");
+                            $("#cod_prod_fc").val("");
+                            $("#nombre_prod_fc").val("");
+                            $("#cantidad_fc").val("");
+                            $("#precio_compra_fc").val("");
+                            $("#precio_venta_fc").val("");
+                            $("#cod_prod_fc").focus();
+                        }else{                        	
+                            var repe = 0;
+                            for (var i = 0; i < filas.length; i++) {
+                                var id = filas[i];
+                                if (id['id_producto_fc'] === $("#id_producto_fc").val()) {
+                                    repe = 1;
+                                }
+                            }
+                            if (repe === 1) {                               
+                            	datarow = {
+                                    id_producto_fc: $("#id_producto_fc").val(), 
+	                                cod_prod_fc: $("#cod_prod_fc").val(), 
+	                                nombre_prod_fc: $("#nombre_prod_fc").val(), 
+	                                cantidad_fc: $("#cantidad_fc").val(), 
+	                                precio_compra_fc: $("#precio_compra_fc").val(), 
+	                                precio_venta_fc: $("#precio_venta_fc").val(), 
+	                                total_fc: (parseFloat($("#precio_compra_fc").val() * $("#cantidad_fc").val())).toFixed(2), 
+                                };
+                                su = jQuery("#list").jqGrid('setRowData', $("#id_producto_fc").val(), datarow);
+                                ////////limpiar///////////
+                                $("#id_producto_fc").val("");
+	                            $("#cod_prod_fc").val("");
+	                            $("#nombre_prod_fc").val("");
+	                            $("#cantidad_fc").val("");
+	                            $("#precio_compra_fc").val("");
+	                            $("#precio_venta_fc").val("");
+	                            $("#cod_prod_fc").focus();
+                            ///////////////////////////
+                            }
+                            else {                                
+                                datarow = {
+                                    id_producto_fc: $("#id_producto_fc").val(), 
+	                                cod_prod_fc: $("#cod_prod_fc").val(), 
+	                                nombre_prod_fc: $("#nombre_prod_fc").val(), 
+	                                cantidad_fc: $("#cantidad_fc").val(), 
+	                                precio_compra_fc: $("#precio_compra_fc").val(), 
+	                                precio_venta_fc: $("#precio_venta_fc").val(), 
+	                                total_fc: (parseFloat($("#precio_compra_fc").val() * $("#cantidad_fc").val())).toFixed(2), 
+                                };
+                                su = jQuery("#list").jqGrid('addRowData', $("#id_producto_fc").val(), datarow);
+                                ////////limpiar///////////
+                                $("#id_producto_fc").val("");
+	                            $("#cod_prod_fc").val("");
+	                            $("#nombre_prod_fc").val("");
+	                            $("#cantidad_fc").val("");
+	                            $("#precio_compra_fc").val("");
+	                            $("#precio_venta_fc").val("");
+	                            $("#cod_prod_fc").focus();
+                            }
+                        }
+                        /////////////Calcular valores///////////////////
+                        var subtotal = 0;
+                        var iva = 0;
+                        var total = 0;                        
+                        var fil = jQuery("#list").jqGrid("getRowData");                        
+                        for (var t = 0; t < fil.length; t++) {
+                            dd = fil[t];                            
+                            subtotal = (subtotal + parseFloat(dd['total_fc']));                
+                        }
+                        subtotal = parseFloat(subtotal).toFixed(2);                            
+                        iva = parseFloat(subtotal * 0.12).toFixed(2);
+                        total = subtotal - iva;
+                        $("#subtotal").val(total);
+                        $("#descuento").val("0");
+                        $("#iva_12").val(iva);
+                        $("#total_fc").val(subtotal);                  		
+					}
+				}
+			}	
+		}	
+	}
+}
