@@ -391,3 +391,77 @@ function buscar_usuario(){
     jQuery("#tabla_busquedas").jqGrid('hideCol', "clave");
     //jQuery("#tabla_busquedas").jqGrid('setFrozenColumns');
 }
+
+function buscar_productos(){
+    jQuery("#tabla_busquedas").jqGrid({
+        datatype: "xml",
+        url: '../servidor/producto/xml_producto.php',        
+        colNames: ['Id','Código','Descripción','Stock','Stock Mínimo','Stock máximo','estado','id_marca','Marca','Cod. Barras','Precio Compra','Precio Venta','Talla','Nombre Producto'],
+        colModel:[      
+            {name:'id_producto',index:'id_producto',frozen:true,align:'left',search:false},
+            {name:'cod_producto',index:'cod_producto',frozen : false,align:'left',search:true},
+            {name:'descripcion_producto',index:'descripcion_producto',frozen : false,align:'left',search:true},
+            {name:'stock',index:'stock',frozen : false,align:'left',search:false},
+            {name:'stock_minimo',index:'stock_minimo',frozen : false,align:'left',search:false},
+            {name:'stock_maximo',index:'stock_maximo',frozen : false,align:'left',search:false},
+            {name:'estado_producto',index:'estado_producto',frozen : false,align:'left',search:false},
+            {name:'tipo_marca',index:'tipo_marca',frozen : false,align:'left',search:false},
+            {name:'marca_prod',index:'marca_prod',frozen : false,align:'left',search:false},
+            {name:'cod_barras',index:'cod_barras',frozen : false,align:'left',search:true},
+            {name:'precio_compra',index:'precio_compra',frozen : false,align:'left',search:false},
+            {name:'precio_venta',index:'precio_venta',frozen : false,align:'left',search:false},
+            {name:'talla',index:'talla',frozen : false,align:'left',search:true},
+            {name:'nombre_producto',index:'nombre_producto',frozen : false,align:'left',search:true},
+        ],          
+        rowNum: 10,
+        autowidth: true, 
+        width: '100%', 
+        height:200,
+        rowList: [10,20,30],
+        pager: jQuery('#pager'),        
+        sortname: 'id_producto',
+        shrinkToFit: false,
+        sortordezr: 'asc',
+        caption: 'Lista de Productos',
+        viewrecords: true,            
+        ondblClickRow: function(rowid) {     
+            var gsr = jQuery("#tabla_busquedas").jqGrid('getGridParam','selrow');         
+            jQuery("#tabla_busquedas").jqGrid('GridToForm',gsr,"#form_productos");  
+            $('#modalBusquedas').modal('hide');
+            comprobarCamposRequired("form_productos");  
+            $("#btn_guardarProducto").text("");
+            $("#btn_guardarProducto").append("<span class='glyphicon glyphicon-log-in'></span> Modificar");     
+            
+        }
+    }).jqGrid('navGrid','#pager',{
+            add:false,
+            edit:false,
+            del:false,           
+            refresh:true,
+            search:true,
+            view:false        
+    },
+    {
+        recreateForm: true, closeAfterEdit: true, checkOnUpdate: true, reloadAfterSubmit: true, closeOnEscape: true
+    },
+    {
+        reloadAfterSubmit: true, closeAfterAdd: true, checkOnUpdate: true, closeOnEscape: true,
+    },
+    {
+        closeOnEscape: true
+    },
+    {
+        closeOnEscape: true,        
+        multipleSearch: false, overlay: false
+
+    },
+    {
+    },
+    {
+        closeOnEscape: true
+    }
+    ); 
+    jQuery("#tabla_busquedas").jqGrid('hideCol', "id_producto");
+    jQuery("#tabla_busquedas").jqGrid('hideCol', "id_marca");
+    //jQuery("#tabla_busquedas").jqGrid('setFrozenColumns');
+}

@@ -63,8 +63,9 @@
             <li class="active"><a href="#tab_a" >Ingresos</a></li>
             <li><a href="#tab_b" >Ingreso de Productos</a></li>
             <li><a href="#tab_c" >Factura Venta</a></li>
-            <li><a href="#tab_d" >Inventario</a></li>
-            <li><a href="#tab_e" >Reportes</a></li>
+            <li><a href="#tab_d" >Factura Compra</a></li>
+            <li><a href="#tab_e" >Inventario</a></li>
+            <li><a href="#tab_f" >Reportes</a></li>
           </ul>
         </div><!-- end of container -->
         <div class="col-sm-9 col-sm-offset-3 sidebar" style="background:#FFF;">
@@ -114,9 +115,9 @@
               </div>  
             </div>
             <div class="tab-pane act" id="tab_b">
-              <h4>Pane B</h4>
-                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames
-                      ac turpis egestas.</p>
+              <?php 
+                include 'form_productos.php';
+              ?>
             </div>
             <div class="tab-pane act" id="tab_c">
               <h4>Pane C</h4>
@@ -124,15 +125,21 @@
                       ac turpis egestas.</p>
             </div>
             <div class="tab-pane act" id="tab_d">
-              <h4>Pane dC</h4>
-                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames
-                      ac turpis egestas.</p>
+              <?php 
+                include 'form_facturaCompra.php';
+              ?>
             </div>
             <div class="tab-pane act" id="tab_e">
               <h4>Pane eC</h4>
                 <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames
                       ac turpis egestas.</p>
             </div>
+            <div class="tab-pane act" id="tab_f">
+              <h4>Pane eC</h4>
+                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames
+                      ac turpis egestas.</p>
+            </div>
+
           </div>  
         </div>
       </div> 

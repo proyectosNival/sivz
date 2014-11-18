@@ -39,7 +39,30 @@ function inicio(){
 	$("#btn_guardarUsuario").on("click",guardarUsuario);
 	$("#btn_limpiarUsuario").on("click",limpiar_form);
 	$("#btn_buscarUsuario").on("click",modal);
-	/**----------------------/
+	/*----------------------*/
+	/*formulario de productos */
+	$("#tipo_marca").load("../servidor/producto/carga_marca.php");
+	$("#btn_guardarProducto").on("click",guardarProducto);
+	$("#btn_limpiarProducto").on("click",limpiar_form);
+	$("#btn_buscarProducto").on("click",modal);
+	/*-----------------------*/
+	/*formulario de productos */
+	$("#ci_proveedor_fc").keyup(function (){
+		autocompletar("ci_proveedor_fc","nombre_proveedor_fc","id_proveedor_fc","../servidor/factura_compra/buscar_proveedor.php?tipo=0","form_facturaCompra");
+	});
+	$("#nombre_proveedor_fc").keyup(function (){
+		autocompletar("nombre_proveedor_fc","ci_proveedor_fc","id_proveedor_fc","../servidor/factura_compra/buscar_proveedor.php?tipo=1","form_facturaCompra");
+	});
+	$("#cod_prod_fc").keyup(function (){
+		autocompletar("cod_prod_fc","nombre_prod_fc","id_producto_fc","../servidor/factura_compra/buscar_producto.php?tipo=0","form_facturaCompra");
+	});
+	$("#nombre_prod_fc").keyup(function (){
+		autocompletar("nombre_prod_fc","cod_prod_fc","id_producto_fc","../servidor/factura_compra/buscar_producto.php?tipo=1","form_facturaCompra");
+	});
+	$("#btn_guardarProducto").on("click",guardarProducto);
+	$("#btn_limpiarProducto").on("click",limpiar_form);
+	$("#btn_buscarProducto").on("click",modal);
+	/*-----------------------*/
 	/*tooltips en los inputs*/
 	$("input").tooltip({
        placement : 'top'
@@ -108,6 +131,10 @@ function modal(e){
 					}else{
 						if(form == "form_usuarios"){
 							buscar_usuario();
+						}else{
+							if(form == "form_productos"){
+								buscar_productos();
+							}	
 						}
 					}
 				}	
@@ -420,14 +447,57 @@ function verificarAdmin(){
 		}
 	}); 	
 }
+
+function guardarProducto(){
+	var resp=comprobarCamposRequired("form_productos");
+	if(resp==true){
+		$("#form_productos").on("submit",function (e){		
+			var valores = $("#form_productos").serialize();
+			var texto=($("#btn_guardarProducto").text()).trim();	
+			if(texto=="Guardar"){		
+				datos_producto(valores,"g",e);
+			}else{
+				datos_producto(valores,"m",e);
+			}
+			e.preventDefault();
+    		$(this).unbind("submit")
+		});
+	}
+}
+function datos_producto(valores,tipo,p){
+	$.ajax({				
+		type: "POST",
+		data: valores+"&tipo="+tipo,
+		url: "../servidor/producto/producto.php",			
+	    success: function(data) {	
+	    	if( data == 0 ){
+	    		alert("Datos enviados Correctamente");
+	    		limpiar_form(p);
+	    	}else{
+	    		if( data == 1 ){
+	    			alert("Este código ya exite ingrese otro");	
+	    			$("#cod_producto").val("");
+	    			$("#cod_producto").focus();
+	    		}else{
+	    			if( data == 3 ){
+	    				alert("Complete todos los campos antes de continuar");	
+	    			}
+	    		}
+	    	}
+		}
+	}); 
+}
+
 function limpiar_form(e){
 	var form;
 	if(e.type == "click"){
 		$("#"+e.currentTarget.form.id+" input").val("");
+		$("#"+e.currentTarget.form.id+" textarea").val("");
 		comprobarCamposRequired(e.currentTarget.form.id);		
 		form = e.currentTarget.form.id;
 	}else{
 		$("#"+e.target.id+" input").val("");
+		$("#"+e.target.id+" textarea").val("");
 		comprobarCamposRequired(e.target.id);		
 		form = e.target.id
 	}
@@ -454,6 +524,11 @@ function limpiar_form(e){
 						if(form == "form_usuarios"){
 							$("#btn_guardarUsuario").text("");
 							$("#btn_guardarUsuario").append("<span class='glyphicon glyphicon-log-in'></span> Guardar");     		
+						}else{
+							if(form == "form_productos"){
+								$("#btn_guardarProducto").text("");
+								$("#btn_guardarProducto").append("<span class='glyphicon glyphicon-log-in'></span> Guardar");     		
+							}
 						}
 					}
 				}	
@@ -477,3 +552,28 @@ function comprobarCamposRequired(form){
    	});
    	return correcto;
 }
+/*funcion para autocompleta con el campo a mostar el id oculto y la direccion donde se encuentra*/
+function autocompletar(campo,campoNombre,campoId,direccion,form){
+	$("#"+campo).autocomplete({
+        source: direccion,
+        minLength:1,
+        focus: function( event, ui ) {
+	        $( "#"+campoId ).val( ui.item.value );
+	        $( "#"+campo ).val( ui.item.label1 );  
+	        $( "#"+campoNombre ).val( ui.item.label2 );  
+	        return false;
+        },
+	    select: function( event, ui ) {
+	        $( "#"+campoId ).val( ui.item.value );
+	        $( "#"+campo ).val( ui.item.label1 );     
+	        $( "#"+campoNombre ).val( ui.item.label2 );   
+	        comprobarCamposRequired(form);		
+	        return false;
+        }     
+        }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+        return $( "<li>" )
+        .append( "<a>"+ item.label1 + "</a>" )
+        .appendTo( ul );
+    };
+}
+/*---------------*/

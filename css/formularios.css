@@ -35,6 +35,9 @@
 #agregar_productos button{
 	width:30%;
 }
+.ui-autocomplete {
+	z-index: 999999999 !important;
+}
 @media (max-width: 768px) {
 	.panel-footer.form-footer {
 		text-align: center;

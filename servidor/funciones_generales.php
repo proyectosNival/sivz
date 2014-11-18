@@ -9,4 +9,18 @@
 	    $cont++;
 	    return $cont;
 	}
+	function busquedas3($conexion, $sql){
+		$resp =true;
+		$sql = pg_query( $conexion, $sql );
+		if($sql){
+			while ($row = pg_fetch_row($sql)) {
+			    $data[] = array(
+			        'value' => $row[0],
+			        'label1' => $row[1],
+			        'label2' => $row[2],
+			    );
+			}
+			echo $data = json_encode($data);
+		}
+	}
 ?>
