@@ -59,10 +59,6 @@ function inicio(){
 	$("#nombre_prod_fc").keyup(function (){
 		autocompletar("nombre_prod_fc","cod_prod_fc","id_producto_fc","../servidor/factura_compra/buscar_producto.php?tipo=1","form_facturaCompra");
 	});
-	$("#btn_guardarProducto").on("click",guardarProducto);
-	$("#btn_limpiarProducto").on("click",limpiar_form);
-	$("#btn_buscarProducto").on("click",modal);
-	/*funcion solu numeros*/
 	$(".soloNumeros").keyup(function(event){
 	    if((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode == 9) || (event.keyCode == 116) || (event.keyCode == 8) || (event.keyCode >= 96 && event.keyCode <= 105) || (event.keyCode == 110) || (event.keyCode == 190)) {
 	        return true;
@@ -70,7 +66,6 @@ function inicio(){
 	    	return false;
 	    }
 	});
-	/*-------------*/
 	$("#cod_prod_fc").on("keypress", enter);
 	$("#nombre_prod_fc").on("keypress", enter);
 	$("#cantidad_fc").on("keypress", enter);
@@ -80,6 +75,9 @@ function inicio(){
 	$("#precio_compra_fc").on("keypress",punto);
 	$("#precio_venta_fc").on("keypress",punto);
 	fc($("#list"));
+	$("#btn_guardarFC").on("click",guardarFC);
+	$("#btn_limpiarFC").on("click",limpiar_form);
+	$("#btn_buscarFC").on("click",modal);
 	/*--------------*/
 	/*tooltips en los inputs*/
 	$("input").tooltip({
@@ -505,7 +503,65 @@ function datos_producto(valores,tipo,p){
 		}
 	}); 
 }
-
+function guardarFC(){
+	var resp=comprobarCamposRequired("form_facturaCompra");
+	if(resp==true){		
+		var valores = $("#form_facturaCompra").serialize();
+		var texto=($("#btn_guardarFC").text()).trim();	
+		if(texto=="Guardar"){		
+			datos_fc(valores,"g");
+		}else{
+			datos_fc(valores,"m");
+		}				
+	}else{
+		alert("Complete todos los campos antes de continuar");
+	}
+}
+function datos_fc(valores,tipo){
+	var v1 = new Array();
+	var v2 = new Array();
+	var v3 = new Array();
+	var v4 = new Array();
+	var v5 = new Array();
+	var string_v1 = "";
+	var string_v2 = "";
+	var string_v3 = "";
+	var string_v4 = "";
+	var string_v5 = "";
+	var fil = jQuery("#list").jqGrid("getRowData");
+	for (var i = 0; i < fil.length; i++) {
+	    var datos = fil[i];
+	    v1[i] = datos['id_producto_fc'];	    
+	    v2[i] = datos['cantidad_fc'];
+	    v3[i] = datos['precio_compra_fc'];
+	    v4[i] = datos['precio_venta_fc'];
+	    v5[i] = datos['total_fc'];
+	}
+	for (i = 0; i < fil.length; i++) {
+	    string_v1 = string_v1 + "|" + v1[i];
+	    string_v2 = string_v2 + "|" + v2[i];
+	    string_v3 = string_v3 + "|" + v3[i];
+	    string_v4 = string_v4 + "|" + v4[i];
+	    string_v5 = string_v5 + "|" + v5[i];
+	}
+	$.ajax({				
+		type: "POST",
+		data: valores+"&tipo="+tipo + "&campo1=" + string_v1 + "&campo2=" + string_v2 + "&campo3=" + string_v3 + "&campo4=" + string_v4 + "&campo5=" + string_v5,
+		url: "../servidor/factura_compra/factura_compra.php",			
+	    success: function(data) {	
+	    	if( data == 0 ){
+	    		alert("Datos enviados Correctamente");
+	    		limpiar_form(p);
+	    	}
+	    	if( data == 1 ){	    		
+	    		alert("Esta marca ya existe ingrese otra");		    		
+	    	}	    	
+	    	if( data == 3 ){
+	    		alert("Complete todos los campos antes de continuar");	
+	    	}
+		}
+	}); 
+}
 function limpiar_form(e){
 	var form;
 	if(e.type == "click"){
@@ -519,6 +575,12 @@ function limpiar_form(e){
 		comprobarCamposRequired(e.target.id);		
 		form = e.target.id
 	}
+	$("#stock").val("0");
+	$("#stock_minimo").val("0");
+	$("#stock_maximo").val("0");
+	$("#precio_compra").val("0");
+	$("#precio_venta").val("0");
+	$("#talla").val("0");
 	if(form == "form_cliente"){
 		$("#btn_guardarCliente").text("");
 		$("#btn_guardarCliente").append("<span class='glyphicon glyphicon-log-in'></span> Guardar");     

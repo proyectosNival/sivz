@@ -51,31 +51,43 @@
               <table id="list" class="" align="center" ></table>
            </div>
            <div class="form-group col-md-10" style="margin-top:0px;margin-bottom:0px;" >
-            <div class="col-sm-9">
+            <div class="col-sm-7">              
             </div>
             <div class="col-sm-2">
-               <input type="text" class="form-control" id='subtotal' placeholder="Subtotal" name="subtotal">  
+              <label class="col-sm-12 control-label">Subtotal</label>
+            </div>
+            <div class="col-sm-2">
+               <input type="text" class="form-control" id='subtotal' readonly placeholder="Subtotal" name="subtotal" value="0.00">  
              </div>
            </div>
            <div class="form-group col-md-10" style="margin-top:0px;margin-bottom:0px;">
-            <div class="col-sm-9">
+            <div class="col-sm-7">              
             </div>
             <div class="col-sm-2">
-               <input type="text" class="form-control" id='iva_12' placeholder="Iva 12%" name="iva_12" >  
+              <label class="col-sm-12 control-label">Iva 12%</label>
+            </div>
+            <div class="col-sm-2">
+               <input type="text" class="form-control" id='iva_12' readonly placeholder="Iva 12%" name="iva_12" value="0.00">  
              </div>
            </div>
            <div class="form-group col-md-10" style="margin-top:0px;margin-bottom:0px;">
-            <div class="col-sm-9">
+            <div class="col-sm-7">              
             </div>
             <div class="col-sm-2">
-               <input type="text" class="form-control" id='descuento' placeholder="Descuento" name="descuento" >  
+              <label class="col-sm-12 control-label">Descuento</label>
+            </div>
+            <div class="col-sm-2">
+               <input type="text" class="form-control" id='descuento' readonly placeholder="Descuento" name="descuento" value="0.00" >  
              </div>
            </div>
            <div class="form-group col-md-10" style="margin-top:0px;margin-bottom:0px;">
-            <div class="col-sm-9">
+            <div class="col-sm-7">              
             </div>
             <div class="col-sm-2">
-               <input type="text" class="form-control" id='total_fc' placeholder="Total" name="total_fc" >  
+              <label class="col-sm-12 control-label">Total</label>
+            </div>
+            <div class="col-sm-2">
+               <input type="text" class="form-control" id='total_fc' readonly placeholder="Total" name="total_fc" value="0.00">  
              </div>
            </div>
          </div>

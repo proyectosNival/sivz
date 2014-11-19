@@ -3,13 +3,21 @@
 	include 'funciones_productos.php';
 	include '../funciones_generales.php';
 	$data;
+	date_default_timezone_set('America/Guayaquil');
+    $fecha=date('Y-m-d H:i:s', time());   
 	$conexion = conectarse();
 	if($_POST['tipo'] == "g"){
 		if( $_POST['cod_producto']){
 			$data=verificar_cod($conexion,$_POST['cod_producto']);
 			if( $data == 0 ){
 				$cont=id_tabla($conexion,"producto","id_producto");
+				$cont_kardex=id_tabla($conexion,"kardex","id_kardex");
+				$cont_kardex_p=id_tabla($conexion,"kardex_producto","id_kardex_producto");
 				$sql="insert into producto values('$cont','$_POST[cod_producto]','$_POST[descripcion_producto]','$_POST[stock]','$_POST[stock_minimo]','$_POST[stock_maximo]','1','$_POST[tipo_marca]','$_POST[cod_barras]','$_POST[precio_compra]','$_POST[precio_venta]','$_POST[talla]','$_POST[nombre_producto]')";
+				pg_query( $conexion, $sql );
+				$sql="insert into kardex values('$cont_kardex','$cont','$fecha')";
+				pg_query( $conexion, $sql );
+				$sql="insert into kardex_producto values('$cont_kardex_p','$cont_kardex','$_POST[stock]','$_POST[precio_compra]','".$_POST['precio_compra'] * $_POST['stock']."','','','','$_POST[stock]','$_POST[precio_compra]','".$_POST['precio_compra'] * $_POST['stock']."','$fecha')";
 				pg_query( $conexion, $sql );
 			}
 		}else{
