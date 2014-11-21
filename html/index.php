@@ -120,9 +120,9 @@
               ?>
             </div>
             <div class="tab-pane act" id="tab_c">
-              <h4>Pane C</h4>
-                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames
-                      ac turpis egestas.</p>
+              <?php 
+                include 'form_factura_venta.php';
+              ?>
             </div>
             <div class="tab-pane act" id="tab_d">
               <?php 

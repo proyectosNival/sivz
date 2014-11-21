@@ -17,7 +17,7 @@
 				pg_query( $conexion, $sql );
 				$sql="insert into kardex values('$cont_kardex','$cont','$fecha')";
 				pg_query( $conexion, $sql );
-				$sql="insert into kardex_producto values('$cont_kardex_p','$cont_kardex','$_POST[stock]','$_POST[precio_compra]','".$_POST['precio_compra'] * $_POST['stock']."','','','','$_POST[stock]','$_POST[precio_compra]','".$_POST['precio_compra'] * $_POST['stock']."','$fecha')";
+				$sql="insert into kardex_producto values('$cont_kardex_p','$cont_kardex','$_POST[stock]','$_POST[precio_compra]','".$_POST['precio_compra'] * $_POST['stock']."','','','','$_POST[stock]','$_POST[precio_compra]','".$_POST['precio_compra'] * $_POST['stock']."','$fecha','Ingreso por inventario','Ingreso por formulario','')";
 				pg_query( $conexion, $sql );
 			}
 		}else{

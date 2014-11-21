@@ -78,7 +78,37 @@ function inicio(){
 	$("#btn_guardarFC").on("click",guardarFC);
 	$("#btn_limpiarFC").on("click",limpiar_form);
 	$("#btn_buscarFC").on("click",modal);
+	$('#fecha_factura').datepicker({
+        dateFormat: 'yy-mm-dd'
+    }).datepicker('setDate', 'today');
 	/*--------------*/
+	/*factura venta*/
+	$("#ci_cliente_fv").keyup(function (){
+		autocompletar("ci_cliente_fv","nombre_cliente_fv","id_cliente_fv","../servidor/factura_venta/busca_clientes.php?tipo=0","form_facturaVenta");
+	});
+	$("#nombre_cliente_fv").keyup(function (){
+		autocompletar("nombre_cliente_fv","ci_cliente_fv","id_cliente_fv","../servidor/factura_venta/busca_clientes.php?tipo=1","form_facturaVenta");
+	});
+	$("#cod_prod_fv").keyup(function (){
+		autocompletar1("cod_prod_fv","nombre_prod_fv","id_producto_fv","../servidor/factura_compra/buscar_producto.php?tipo=0","form_facturaVenta","precio_total_fv");
+	});
+	$("#nombre_prod_fv").keyup(function (){
+		autocompletar1("nombre_prod_fv","cod_prod_fv","id_producto_fv","../servidor/factura_compra/buscar_producto.php?tipo=1","form_facturaVenta","precio_total_fv");
+	});
+	$("#cod_prod_fv").on("keypress", enter1);
+	$("#nombre_prod_fv").on("keypress", enter1);
+	$("#cantidad_fv").on("keypress", enter1);	
+	$("#precio_venta_fv").on("keypress", enter1);
+	$("#cantidad_fv").on("keypress",punto);	
+	$("#precio_venta_fv").on("keypress",punto);
+	fv($("#list1"));
+	$("#btn_guardarFV").on("click",guardarFV);
+	$("#btn_limpiarFV").on("click",limpiar_form);
+	$("#btn_buscarFV").on("click",modal);
+	$('#fecha_facturaV').datepicker({
+        dateFormat: 'yy-mm-dd'
+    }).datepicker('setDate', 'today');
+	/*-----------*/
 	/*tooltips en los inputs*/
 	$("input").tooltip({
        placement : 'top'
@@ -150,6 +180,10 @@ function modal(e){
 						}else{
 							if(form == "form_productos"){
 								buscar_productos();
+							}else{
+								if(form == "form_facturaCompra"){									
+									buscar_fc();
+								}
 							}	
 						}
 					}
@@ -376,7 +410,6 @@ function datos_media(valores,tipo,p){
 		}
 	}); 
 }
-
 function guardarUsuario(){
 	var resp=comprobarCamposRequired("form_usuarios");
 	if(resp==true){
@@ -437,7 +470,6 @@ function datos_usuario(valores,tipo,p){
 		}
 	}); 
 }
-
 function verificarAdmin(){
 	var user =$("#usuario_admin").val();
 	var clave =$("#clave_admin").val();
@@ -463,7 +495,6 @@ function verificarAdmin(){
 		}
 	}); 	
 }
-
 function guardarProducto(){
 	var resp=comprobarCamposRequired("form_productos");
 	if(resp==true){
@@ -551,11 +582,60 @@ function datos_fc(valores,tipo){
 	    success: function(data) {	
 	    	if( data == 0 ){
 	    		alert("Datos enviados Correctamente");
-	    		limpiar_form(p);
+	    		location.reload();
+	    	}	    	    	
+	    	if( data == 3 ){
+	    		alert("Complete todos los campos antes de continuar");	
 	    	}
-	    	if( data == 1 ){	    		
-	    		alert("Esta marca ya existe ingrese otra");		    		
-	    	}	    	
+		}
+	}); 
+}
+function guardarFV(){
+	var resp=comprobarCamposRequired("form_facturaVenta");
+	if(resp==true){		
+		var valores = $("#form_facturaVenta").serialize();
+		var texto=($("#btn_guardarFV").text()).trim();	
+		if(texto=="Guardar"){		
+			datos_fv(valores,"g");
+		}else{
+			datos_fv(valores,"m");
+		}				
+	}else{
+		alert("Complete todos los campos antes de continuar");
+	}
+}
+function datos_fv(valores,tipo){
+	var v1 = new Array();
+	var v2 = new Array();
+	var v3 = new Array();
+	var v4 = new Array();	
+	var string_v1 = "";
+	var string_v2 = "";
+	var string_v3 = "";
+	var string_v4 = "";	
+	var fil = jQuery("#list1").jqGrid("getRowData");
+	for (var i = 0; i < fil.length; i++) {
+	    var datos = fil[i];
+	    v1[i] = datos['id_producto_fv'];	    
+	    v2[i] = datos['cantidad_fv'];
+	    v3[i] = datos['precio_venta_fv'];
+	    v4[i] = datos['total_fv'];	    
+	}
+	for (i = 0; i < fil.length; i++) {
+	    string_v1 = string_v1 + "|" + v1[i];
+	    string_v2 = string_v2 + "|" + v2[i];
+	    string_v3 = string_v3 + "|" + v3[i];
+	    string_v4 = string_v4 + "|" + v4[i];	    
+	}
+	$.ajax({				
+		type: "POST",
+		data: valores+"&tipo="+tipo + "&campo1=" + string_v1 + "&campo2=" + string_v2 + "&campo3=" + string_v3 + "&campo4=" + string_v4,
+		url: "../servidor/factura_venta/factura_venta.php",			
+	    success: function(data) {	
+	    	if( data == 0 ){
+	    		alert("Datos enviados Correctamente");	    		
+	    		location.reload();
+	    	}	    		    	
 	    	if( data == 3 ){
 	    		alert("Complete todos los campos antes de continuar");	
 	    	}
@@ -608,6 +688,12 @@ function limpiar_form(e){
 							if(form == "form_productos"){
 								$("#btn_guardarProducto").text("");
 								$("#btn_guardarProducto").append("<span class='glyphicon glyphicon-log-in'></span> Guardar");     		
+							}else{
+								if(form == "form_facturaCompra"){
+									$("#btn_guardarFC").text("");
+									$("#btn_guardarFC").append("<span class='glyphicon glyphicon-log-in'></span> Guardar");     											
+									location.reload();
+								}	
 							}
 						}
 					}
@@ -656,6 +742,31 @@ function autocompletar(campo,campoNombre,campoId,direccion,form){
         .appendTo( ul );
     };
 }
+function autocompletar1(campo,campoNombre,campoId,direccion,form,cp){
+	$("#"+campo).autocomplete({
+        source: direccion,
+        minLength:1,
+        focus: function( event, ui ) {
+	        $( "#"+campoId ).val( ui.item.value );
+	        $( "#"+campo ).val( ui.item.label1 );  
+	        $( "#"+campoNombre ).val( ui.item.label2 );  
+	        $( "#"+cp ).val( ui.item.label3 );  
+	        return false;
+        },
+	    select: function( event, ui ) {
+	        $( "#"+campoId ).val( ui.item.value );
+	        $( "#"+campo ).val( ui.item.label1 );     
+	        $( "#"+campoNombre ).val( ui.item.label2 );  
+	        $( "#"+cp ).val( ui.item.label3 );   
+	        comprobarCamposRequired(form);		
+	        return false;
+        }     
+        }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+        return $( "<li>" )
+        .append( "<a>"+ item.label1 + "</a>" )
+        .appendTo( ul );
+    };
+}
 /*---------------*/
 /*funcion numerico*/
 function punto(e){
@@ -688,7 +799,7 @@ function numeros(e) {
 	if (tecla==8) return true;
 	patron = /\d/;
 	te = String.fromCharCode(tecla);
-return patron.test(te);
+	return patron.test(te);
 }
 function enter(e) {
     if (e.which === 13 || e.keyCode === 13) {
@@ -696,6 +807,118 @@ function enter(e) {
         return false;
     }
     return true;
+}
+function enter1(e) {
+    if (e.which === 13 || e.keyCode === 13) {
+        comprobarVacios1("cod_prod_fv","nombre_prod_fv","cantidad_fv","precio_venta_fv")
+        return false;
+    }
+    return true;
+}
+function comprobarVacios1(id1,id2,id3,id4){
+	if($("#"+id1).val() == ""){
+		alert("Ingrese un código de producto");
+		$("#"+id1).focus();
+	}else{
+		if($("#"+id2).val() == ""){
+			alert("Ingrese un nombre de producto");
+			$("#"+id2).focus()
+		}else{
+			if($("#"+id3).val() == ""){
+				alert("Ingrese una cantidad");
+				$("#"+id3).focus()
+			}else{				
+				if($("#"+id4).val() == ""){
+					alert("Ingrese un precio de venta");
+					$("#"+id4).focus()
+				}else{
+					var filas = jQuery("#list1").jqGrid("getRowData");
+					if (filas.length === 0) {                            
+                    	var datarow = {
+                            id_producto_fv: $("#id_producto_fv").val(), 
+                            cod_prod_fv: $("#cod_prod_fv").val(), 
+                            nombre_prod_fv: $("#nombre_prod_fv").val(), 
+                            cantidad_fv: $("#cantidad_fv").val(),                             
+                            precio_venta_fv: $("#precio_venta_fv").val(),                             
+                            total_fv: (parseFloat($("#precio_venta_fv").val() * $("#cantidad_fv").val())).toFixed(2), 
+                        };
+                        su = jQuery("#list1").jqGrid('addRowData', $("#id_producto_fv").val(), datarow);
+                        ////////limpiar///////////
+                        $("#id_producto_fv").val("");
+                        $("#cod_prod_fv").val("");
+                        $("#nombre_prod_fv").val("");
+                        $("#cantidad_fv").val("");                        
+                        $("#precio_venta_fv").val("");
+                        $("#precio_total_fv").val("");
+                        $("#cod_prod_fv").focus();
+                    }else{                        	
+                        var repe = 0;
+                        for (var i = 0; i < filas.length; i++) {
+                            var id = filas[i];
+                            if (id['id_producto_fv'] === $("#id_producto_fv").val()) {
+                                repe = 1;
+                            }
+                        }
+                        if (repe === 1) {                               
+                        	datarow = {
+                                id_producto_fv: $("#id_producto_fv").val(), 
+                                cod_prod_fv: $("#cod_prod_fv").val(), 
+                                nombre_prod_fv: $("#nombre_prod_fv").val(), 
+                                cantidad_fv: $("#cantidad_fv").val(),                                 
+                                precio_venta_fv: $("#precio_venta_fv").val(), 
+                                total_fv: (parseFloat($("#precio_venta_fv").val() * $("#cantidad_fv").val())).toFixed(2), 
+                            };
+                            su = jQuery("#list1").jqGrid('setRowData', $("#id_producto_fv").val(), datarow);
+                            ////////limpiar///////////
+                            $("#id_producto_fv").val("");
+                            $("#cod_prod_fv").val("");
+                            $("#nombre_prod_fv").val("");
+                            $("#cantidad_fv").val("");                        
+                            $("#precio_venta_fv").val("");
+                            $("#precio_total_fv").val("");
+                            $("#cod_prod_fv").focus();                            
+                        	///////////////////////////
+                        }
+                        else {                                
+                            datarow = {
+                                id_producto_fv: $("#id_producto_fv").val(), 
+                                cod_prod_fv: $("#cod_prod_fv").val(), 
+                                nombre_prod_fv: $("#nombre_prod_fv").val(), 
+                                cantidad_fv: $("#cantidad_fv").val(),                                 
+                                precio_venta_fv: $("#precio_venta_fv").val(), 
+                                total_fv: (parseFloat($("#precio_venta_fv").val() * $("#cantidad_fv").val())).toFixed(2), 
+                            };
+                            su = jQuery("#list1").jqGrid('addRowData', $("#id_producto_fv").val(), datarow);
+                            ////////limpiar///////////
+                            $("#id_producto_fv").val("");
+                            $("#cod_prod_fv").val("");
+                            $("#nombre_prod_fv").val("");
+                            $("#cantidad_fv").val("");                            
+                            $("#precio_venta_fv").val("");
+                            $("#precio_total_fv").val("");
+                            $("#cod_prod_fc").focus();
+                        }
+                    }
+                    /////////////Calcular valores///////////////////
+                    var subtotal = 0;
+                    var iva = 0;
+                    var total = 0;                        
+                    var fil = jQuery("#list1").jqGrid("getRowData");                        
+                    for (var t = 0; t < fil.length; t++) {
+                        dd = fil[t];                            
+                        subtotal = (subtotal + parseFloat(dd['total_fv']));                
+                    }
+                    subtotal = parseFloat(subtotal).toFixed(2);                            
+                    iva = parseFloat(subtotal * 0.12).toFixed(2);
+                    total = (subtotal - iva).toFixed(2);
+                    $("#subtotal_fv").val(total);
+                    $("#descuento_fv").val("0");
+                    $("#iva_12_fv").val(iva);
+                    $("#total_fv").val(subtotal);                  		
+				}
+			}
+		}	
+	}
 }
 function comprobarVacios(id1,id2,id3,id4,id5){
 	if($("#"+id1).val() == ""){
@@ -799,7 +1022,7 @@ function comprobarVacios(id1,id2,id3,id4,id5){
                         }
                         subtotal = parseFloat(subtotal).toFixed(2);                            
                         iva = parseFloat(subtotal * 0.12).toFixed(2);
-                        total = subtotal - iva;
+                        total = (subtotal - iva).toFixed(2);
                         $("#subtotal").val(total);
                         $("#descuento").val("0");
                         $("#iva_12").val(iva);

@@ -536,12 +536,12 @@ function fc (){
                 for (var t = 0; t < fil.length; t++) {
                     dd = fil[t];                            
                     subtotal = (subtotal + parseFloat(dd['total_fc']));                
-                }
+                }                
                 subtotal = parseFloat(subtotal).toFixed(2);                            
                 iva = parseFloat(subtotal * 0.12).toFixed(2);
-                total = subtotal - iva;
+                total = (subtotal - iva).toFixed(2);
                 $("#subtotal").val(total);
-                $("#descuento").val("0");
+                $("#descuento").val("0.00");
                 $("#iva_12").val(iva);
                 $("#total_fc").val(subtotal);               
               
@@ -557,9 +557,9 @@ function fc (){
                     }
                     subtotal = parseFloat(subtotal).toFixed(2);                            
                     iva = parseFloat(subtotal * 0.12).toFixed(2);
-                    total = subtotal - iva;
+                    total = (subtotal - iva).toFixed(2);
                     $("#subtotal").val(total);
-                    $("#descuento").val("0");
+                    $("#descuento").val("0.00");
                     $("#iva_12").val(iva);
                     $("#total_fc").val(subtotal);               
                   
@@ -575,15 +575,192 @@ function fc (){
                         }
                         subtotal = parseFloat(subtotal).toFixed(2);                            
                         iva = parseFloat(subtotal * 0.12).toFixed(2);
-                        total = subtotal - iva;
+                        total = (subtotal - iva).toFixed(2);
                         $("#subtotal").val(total);
-                        $("#descuento").val("0");
+                        $("#descuento").val("0.00");
                         $("#iva_12").val(iva);
                         $("#total_fc").val(subtotal);               
                       
                     }    
                 }
             }
+        }
+    });
+
+}
+function fv (){
+    jQuery("#list1").jqGrid({
+        datatype: "local",
+        colNames: ['', 'ID', 'Código', 'Detalle', 'Cantidad', 'Precio. U', 'Total'],
+        colModel: [
+            {name: 'myac', width: 50, fixed: true, sortable: false, resize: false, formatter: 'actions',
+                formatoptions: {keys: false, delbutton: true, editbutton: false}
+            },
+            {name: 'id_producto_fv', index: 'id_producto_fv', editable: false, search: false, hidden: true, editrules: {edithidden: false}, align: 'center', frozen: true, width: 50},
+            {name: 'cod_prod_fv', index: 'cod_prod_fv', editable: false, search: false, hidden: false, editrules: {edithidden: false}, align: 'center', frozen: true, width: 100},
+            {name: 'nombre_prod_fv', index: 'nombre_prod_fv', editable: false, frozen: true, editrules: {required: true}, align: 'center', width: 290},
+            {name: 'cantidad_fv', index: 'cantidad_fv', editable: true, frozen: true, editrules: {required: true}, align: 'center', width: 70, editoptions:{maxlength: 10, size:15,dataInit: function(elem){$(elem).bind("keypress", function(e) {return numeros(e)})}}},             
+            {name: 'precio_venta_fv', index: 'precio_venta_fv', editable: true, frozen: true, editrules: {required: true}, align: 'center', width: 70,editoptions:{maxlength: 10, size:15,dataInit: function(elem){$(elem).bind("keypress", function(e) {return punto(e)})}}},            
+            {name: 'total_fv', index: 'total_fv', editable: false, frozen: true, editrules: {required: true}, align: 'center', width: 70},            
+        ],
+        rowNum: 30,
+        shrinkToFit: true,
+        autowidth: true,
+        sortable: true,
+        rowList: [10, 20, 30],
+        pager: jQuery('#pager'),
+        sortname: 'id_producto_fv',
+        sortorder: 'asc',
+        viewrecords: true,
+        cellEdit: true,
+        cellsubmit: 'clientArray',
+        delOptions: {
+            modal: true,
+            jqModal: true,
+            onclickSubmit: function(rp_ge, rowid) {
+                var id = jQuery("#list1").jqGrid('getGridParam', 'selrow');
+                jQuery('#list1').jqGrid('restoreRow', id);
+                var ret = jQuery("#list1").jqGrid('getRowData', id);
+                rp_ge.processing = true;
+                var su = jQuery("#list1").jqGrid('delRowData', rowid);                                
+                var total = 0;
+                var iva = 0 ;
+                var subtotal = 0;                
+                if (su === true) {                                                                
+                    total = ($("#total_fv").val() - ret.total_fv).toFixed(2);                    
+                    iva = parseFloat(total * 0.12).toFixed(2);                    
+                    subtotal = parseFloat(total - iva).toFixed(2);                                        
+                    $("#total_fv").val(total);                    
+                    $("#iva_12_fv").val(iva);
+                    $("#subtotal_fv").val(subtotal);
+                }
+                $(".ui-icon-closethick").trigger('click');
+                //$("#delmodlist").hide();
+                return true;
+            },
+            processing: true
+        },
+        afterSaveCell : function(rowid,name,val,iRow,iCol) {
+            var subtotal = 0;
+            var iva = 0;
+            var total = 0;            
+            var id = jQuery("#list1").jqGrid('getGridParam', 'selrow');
+            jQuery('#list1').jqGrid('restoreRow', id);
+            var ret = jQuery("#list1").jqGrid('getRowData', id);
+
+            if(name == 'cantidad_fv') {
+               var precio_fv = jQuery("#list1").jqGrid('getCell',rowid,iCol+1);               
+               var operacion = (parseFloat(val) * parseFloat(precio_fv)).toFixed(2); 
+               jQuery("#list1").jqGrid('setRowData',rowid,{total_fv: operacion });
+               
+                                   
+                var fil = jQuery("#list1").jqGrid("getRowData");                        
+                for (var t = 0; t < fil.length; t++) {
+                    dd = fil[t];                            
+                    subtotal = (subtotal + parseFloat(dd['total_fv']));                
+                }                
+                subtotal = parseFloat(subtotal).toFixed(2);                            
+                iva = parseFloat(subtotal * 0.12).toFixed(2);
+                total = (subtotal - iva).toFixed(2);
+                $("#subtotal_fv").val(total);
+                $("#descuento_fv").val("0.00");
+                $("#iva_12").val(iva);
+                $("#total_fv").val(subtotal);               
+              
+            }else{
+                if(name == 'precio_venta_fv') {
+                   var cantidad = jQuery("#list1").jqGrid('getCell',rowid,iCol-1);                   
+                   var operacion = (parseFloat(val) * parseFloat(cantidad)).toFixed(2); 
+                   jQuery("#list1").jqGrid('setRowData',rowid,{total_fv: operacion });                                                          
+                    var fil = jQuery("#list1").jqGrid("getRowData");                        
+                    for (var t = 0; t < fil.length; t++) {
+                        dd = fil[t];                            
+                        subtotal = (subtotal + parseFloat(dd['total_fv']));                
+                    }
+                    subtotal = parseFloat(subtotal).toFixed(2);                            
+                    iva = parseFloat(subtotal * 0.12).toFixed(2);
+                    total = (subtotal - iva).toFixed(2);
+                    $("#subtotal_fv").val(total);
+                    $("#descuento_fv").val("0.00");
+                    $("#iva_12").val(iva);
+                    $("#total_fv").val(subtotal);                           
+                }
+            }
+        }
+    });
+
+}
+function buscar_fc(){
+    jQuery("#tabla_busquedas").jqGrid({
+        url: '../servidor/factura_compra/xml_facturaCompra.php',
+        datatype: 'xml',
+        colNames: ['ID','Fecha Factura','id_prov','Proveedor','id_usu','Usuario','Subtotal','Descuento','Iva','Total'],
+        colModel: [
+            {name: 'id_factura_compra', index: 'id_factura_compra',frozen:true,align:'left',search:false},
+            {name: 'fecha_factura', index: 'fecha_factura',frozen:true,align:'left',search:false},
+            {name: 'id_proveedor', index: 'id_proveedor',frozen:true,align:'left',search:false},
+            {name: 'nombre_proveedor', index: 'nombre_proveedor',frozen:true,align:'left',search:false},
+            {name: 'id_usuario', index: 'id_usuario',frozen:true,align:'left',search:false},
+            {name: 'nombre_usuario', index: 'nombre_usuario',frozen:true,align:'left',search:false},
+            {name: 'subtotal', index: 'subtotal',frozen:true,align:'left',search:false},
+            {name: 'descuento', index: 'descuento',frozen:true,align:'left',search:false},
+            {name: 'iva', index: 'iva',frozen:true,align:'left',search:false},
+            {name: 'total', index: 'total',frozen:true,align:'left',search:false},
+            
+        ],
+        rowNum: 10,
+        autowidth:true,
+        width: '100%',
+        rowList: [10, 20, 30],
+        pager: jQuery('#pager'),
+        sortname: 'id_factura_compra',
+        shrinkToFit: false,
+        sortorder: 'asc',
+        caption: 'Facturas Compras',        
+        viewrecords: true,         
+    }).jqGrid('navGrid', '#pager',
+    {
+        add: false,
+        edit: false,
+        del: false,
+        refresh: true,
+        search: true,
+        view: false,
+    },
+    {
+        recreateForm: true, closeAfterEdit: true, checkOnUpdate: true, reloadAfterSubmit: true, closeOnEscape: true
+    },
+    {
+        reloadAfterSubmit: true, closeAfterAdd: true, checkOnUpdate: true, closeOnEscape: true,
+        bottominfo: "Todos los campos son obligatorios son obligatorios"
+    },
+    {
+        width: 300, closeOnEscape: true
+    },
+    {
+        closeOnEscape: true,
+        multipleSearch: false, overlay: false
+    },
+    {
+    },
+    {
+        closeOnEscape: true
+    });
+    jQuery("#tabla_busquedas").jqGrid('hideCol', "id_factura_compra");
+    jQuery("#tabla_busquedas").jqGrid('hideCol', "id_proveedor");      
+    jQuery("#tabla_busquedas").jqGrid('hideCol', "id_usuario");      
+    
+    jQuery("#tabla_busquedas").jqGrid('navButtonAdd', '#pager', {caption: "PDF",
+        onClickButton: function() {
+            var id = jQuery("#tabla_busquedas").jqGrid('getGridParam', 'selrow');
+
+            if (id) {
+            jQuery('#tabla_busquedas').jqGrid('restoreRow', id);   
+            var ret = jQuery("#tabla_busquedas").jqGrid('getRowData', id);            
+            } else {
+                alert("Seleccione un fila");
+            }
+
         }
     });
 

@@ -26,7 +26,7 @@
             <div class="form-group col-md-5">
              <label class="col-sm-3 control-label" for='fecha_factura'>Fecha</label>
              <div class="col-sm-9">
-               <input type="date" class="form-control" id='fecha_factura' name="fecha_factura" >  
+               <input type="text" class="form-control" id='fecha_factura' name="fecha_factura" >  
              </div>
            </div>
            <div class="form-group col-md-10" >
