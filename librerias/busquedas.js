@@ -765,3 +765,65 @@ function buscar_fc(){
     });
 
 }
+function inventario_informacion (){
+    jQuery("#list2").jqGrid({        
+        url:'../servidor/inventario/xml_inventario.php',
+        datatype:'xml',             
+        colNames: ['id_prod_inv','Código','Nombre Producto','Stock','Stock Maximo','Stock Mínimo','Precio Compra','Precio Venta','Marca'],
+        colModel:[
+            {name:'id_producto_inv',index:'id_producto_inv',align:'center',frozen:true,width:100},
+            {name:'codigo_producto_inv',index:'codigo_producto_inv',align:'center',width:185},
+            {name:'nombre_producto_inv',index:'nombre_producto_inv',align:'center',width:185},            
+            {name:'stock_inv',index:'stock_inv',align:'center',width:110},
+            {name:'max',index:'max',align:'center',width:110},                      
+            {name:'min',index:'min',align:'center',width:110},            
+            {name:'precio_compra_inv',index:'precio_compra_inv',align:'center',width:110},                        
+            {name:'precio_venta_inv',index:'precio_venta_inv',align:'center',width:110},                        
+            {name:'marca_inv',index:'marca_inv',align:'center',width:110},                        
+            
+        ],          
+        loadComplete: function(data) {          
+              var rowData = $("#list2").getDataIDs();
+              var fil = $("#list2").getRowData(); 
+              for (var i = 0; i < rowData.length; i++) 
+              {
+                var dd=fil[i];
+                if(parseInt(dd['min'])>parseInt(dd['stock_inv']))
+                {
+                    $("#list2").jqGrid('setRowData', rowData[i], false, {color:'red'});
+                    $("#list2").jqGrid('setRowData', rowData[i], false, {'font-size':'12px'});
+                }                
+                if(parseInt(dd['stock_inv'])>=parseInt(dd['min']) && parseInt(dd['stock_inv'])<=parseInt(dd['max']))
+                {
+                    $("#list2").jqGrid('setRowData', rowData[i], false, {color:'green'});
+                    $("#list2").jqGrid('setRowData', rowData[i], false, {'font-size':'12px'});
+                }
+                if(parseInt(dd['stock_inv'])>parseInt(dd['max']))
+                {                    
+                    $("#list2").jqGrid('setRowData', rowData[i], false, {color:'blue'});
+                    $("#list2").jqGrid('setRowData', rowData[i], false, {'font-size':'12px'});
+                }
+                
+                
+              }
+        },   
+        rowNum: 10,        
+        width: 850,
+        height:300,
+        rowList: [10, 20, 30],
+        pager: jQuery('#pager2'),
+        sortname: 'id_producto',
+        shrinkToFit: false,
+        sortorder: 'asc',
+        caption: 'Inventario',        
+        viewrecords: true,         
+        }).jqGrid('navGrid','#pager2',{
+                add:false,
+                edit:false,
+                del:false,           
+                refresh:true,
+                search:false,
+                view:true        
+        });     
+        jQuery("#list2").jqGrid('hideCol', "id_producto_inv");   
+}

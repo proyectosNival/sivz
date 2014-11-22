@@ -60,7 +60,7 @@
 	        pg_query("update producto set stock = '$stock', precio_compra = '$t_precio_compra' where id_producto = '$arreglo1[$i]'");
 	        /**/
 		}				
-		$data = 0;
+		$data = $cont;
 	}else{
 		
 	}

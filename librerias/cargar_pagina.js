@@ -109,6 +109,9 @@ function inicio(){
         dateFormat: 'yy-mm-dd'
     }).datepicker('setDate', 'today');
 	/*-----------*/
+	/*inventario*/
+		inventario_informacion($("#list2"))
+	/*-------*/
 	/*tooltips en los inputs*/
 	$("input").tooltip({
        placement : 'top'
@@ -580,11 +583,12 @@ function datos_fc(valores,tipo){
 		data: valores+"&tipo="+tipo + "&campo1=" + string_v1 + "&campo2=" + string_v2 + "&campo3=" + string_v3 + "&campo4=" + string_v4 + "&campo5=" + string_v5,
 		url: "../servidor/factura_compra/factura_compra.php",			
 	    success: function(data) {	
-	    	if( data == 0 ){
+	    	if( data > 0 ){
 	    		alert("Datos enviados Correctamente");
 	    		location.reload();
+	    		window.open("../reportes/reportes/factura_compra.php?id="+data,'_blank');    
 	    	}	    	    	
-	    	if( data == 3 ){
+	    	if( data == 0 ){
 	    		alert("Complete todos los campos antes de continuar");	
 	    	}
 		}
@@ -632,11 +636,12 @@ function datos_fv(valores,tipo){
 		data: valores+"&tipo="+tipo + "&campo1=" + string_v1 + "&campo2=" + string_v2 + "&campo3=" + string_v3 + "&campo4=" + string_v4,
 		url: "../servidor/factura_venta/factura_venta.php",			
 	    success: function(data) {	
-	    	if( data == 0 ){
+	    	if( data > 0 ){
 	    		alert("Datos enviados Correctamente");	    		
 	    		location.reload();
+	    		window.open("../reportes/reportes/factura_venta.php?id="+data,'_blank');    
 	    	}	    		    	
-	    	if( data == 3 ){
+	    	if( data == 0 ){
 	    		alert("Complete todos los campos antes de continuar");	
 	    	}
 		}

@@ -1,3 +1,9 @@
+<?php
+session_start();
+if (empty($_SESSION['id'])) {
+    header('Location: ../index.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -50,7 +56,7 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="../index.html">Cerrar Sesión</a></li>
+            <li><a href="../index.php">Cerrar Sesión</a></li>
           </ul>
         </div>
       </div>
@@ -130,9 +136,9 @@
               ?>
             </div>
             <div class="tab-pane act" id="tab_e">
-              <h4>Pane eC</h4>
-                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames
-                      ac turpis egestas.</p>
+             <?php
+              include 'form_inventario.php';
+             ?>
             </div>
             <div class="tab-pane act" id="tab_f">
               <h4>Pane eC</h4>
