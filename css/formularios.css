@@ -17,8 +17,19 @@
 	padding: 5px;
 	display: inline-block;
 }
+.tab_index{
+	background: rgb(239, 239, 239);
+}
 .tab_index  .sidebar{
 	display: block;
+}
+.tab_index ul {
+	font-weight: bold;
+	font-size: 15px;
+}
+.content_index ul{
+	font-weight: bold;
+	font-size: 15px;	
 }
 .ui-grid{ 
 	width:100% !important; 
@@ -40,6 +51,9 @@
 }
 .ui-widget{
 	z-index: 999999999 !important;
+}
+.sidebar{
+	display: block;
 }
 @media (max-width: 768px) {
 	.panel-footer.form-footer {

@@ -1,5 +1,49 @@
 $(document).on("ready", inicio);
-function inicio(){
+/*para cargar la imange*/
+$(function(){
+    Test = {
+        UpdatePreview: function(obj){
+            // if IE < 10 doesn't support FileReader
+            if(!window.FileReader){
+            // don't know how to proceed to assign src to image tag
+            } else {
+                var reader = new FileReader();
+                var target = null;
+             
+                reader.onload = function(e) {
+                    target =  e.target || e.srcElement;
+                    $("#foto").prop("src", target.result);
+                };
+                reader.readAsDataURL(obj.files[0]);
+            }
+        }
+    };
+});
+/*------------*/
+
+function inicio(){	
+	/*----para la imagen----*/
+	function getDoc(frame) {
+    	var doc = null;     
+     	
+     	try {
+        	if (frame.contentWindow) {
+            	doc = frame.contentWindow.document;
+         	}
+     	} catch(err) {
+    	}
+	    if (doc) { 
+	         return doc;
+	    }
+	    try { 
+	         doc = frame.contentDocument ? frame.contentDocument : frame.document;
+	    } catch(err) {
+	       
+	         doc = frame.document;
+	    }
+	    return doc;
+ 	}
+ 	/*------------*/
 	/*formulario de clientes */
 	$("#btn_guardarCliente").on("click",guardarIngresos);
 	$("#btn_limpiarIngreso").on("click",limpiar_form);
@@ -46,7 +90,7 @@ function inicio(){
 	$("#btn_limpiarProducto").on("click",limpiar_form);
 	$("#btn_buscarProducto").on("click",modal);
 	/*-----------------------*/
-	/*formulario de fc */
+	/*formulario de fc */	
 	$("#ci_proveedor_fc").keyup(function (){
 		autocompletar("ci_proveedor_fc","nombre_proveedor_fc","id_proveedor_fc","../servidor/factura_compra/buscar_proveedor.php?tipo=0","form_facturaCompra");
 	});
@@ -83,6 +127,7 @@ function inicio(){
     }).datepicker('setDate', 'today');
 	/*--------------*/
 	/*factura venta*/
+	
 	$("#ci_cliente_fv").keyup(function (){
 		autocompletar("ci_cliente_fv","nombre_cliente_fv","id_cliente_fv","../servidor/factura_venta/busca_clientes.php?tipo=0","form_facturaVenta");
 	});
@@ -186,6 +231,10 @@ function modal(e){
 							}else{
 								if(form == "form_facturaCompra"){									
 									buscar_fc();
+								}else{
+									if(form == "form_facturaVenta"){									
+										buscar_fv();
+									}	
 								}
 							}	
 						}
@@ -360,6 +409,7 @@ function datos_marcas(valores,tipo,p){
 	    	if( data == 0 ){
 	    		alert("Datos enviados Correctamente");
 	    		limpiar_form(p);
+	    		$("#tipo_marca").load("../servidor/producto/carga_marca.php");
 	    	}
 	    	if( data == 1 ){
 	    		$("#nombre_marca").parent().removeClass('has-success');
@@ -499,43 +549,64 @@ function verificarAdmin(){
 	}); 	
 }
 function guardarProducto(){
-	var resp=comprobarCamposRequired("form_productos");
-	if(resp==true){
-		$("#form_productos").on("submit",function (e){		
-			var valores = $("#form_productos").serialize();
-			var texto=($("#btn_guardarProducto").text()).trim();	
-			if(texto=="Guardar"){		
-				datos_producto(valores,"g",e);
-			}else{
-				datos_producto(valores,"m",e);
-			}
-			e.preventDefault();
-    		$(this).unbind("submit")
-		});
-	}
+	if($("#cod_producto").val() != ""){    	    	
+		if($("#nombre_producto").val() != ""){ 
+			$("#form_productos").on("submit",function (e){		
+				var texto=($("#btn_guardarProducto").text()).trim();								
+				var formObj = $(this);		
+				if(window.FormData !== undefined) {	
+					var formData = new FormData(this); 		    					
+					if(texto=="Guardar"){		
+						datos_producto(formData,"g",e)  		    		    
+					}else{
+						datos_producto(formData,"m",e)  		    		    
+					}
+				e.preventDefault();						
+				}else{
+				    var  iframeId = "unique" + (new Date().getTime());
+				    var iframe = $('<iframe src="javascript:false;" name="'+iframeId+'" />');
+				    iframe.hide();
+				    formObj.attr("target",iframeId);
+				    iframe.appendTo("body");
+				    iframe.load(function(e) {
+				        var doc = getDoc(iframe[0]);
+				        var docRoot = doc.body ? doc.body : doc.documentElement;
+				        var data = docRoot.innerHTML;
+				    });			
+				}
+			});
+			$("#form_productos").submit();		   	    	
+		}else{
+			alert("Indique un nombre de producto")	
+		}	
+	}else{
+		alert("Indique un código de producto")
+	}	
 }
-function datos_producto(valores,tipo,p){
-	$.ajax({				
-		type: "POST",
-		data: valores+"&tipo="+tipo,
-		url: "../servidor/producto/producto.php",			
-	    success: function(data) {	
-	    	if( data == 0 ){
-	    		alert("Datos enviados Correctamente");
-	    		limpiar_form(p);
-	    	}else{
-	    		if( data == 1 ){
-	    			alert("Este código ya exite ingrese otro");	
-	    			$("#cod_producto").val("");
-	    			$("#cod_producto").focus();
-	    		}else{
-	    			if( data == 3 ){
-	    				alert("Complete todos los campos antes de continuar");	
-	    			}
-	    		}
-	    	}
-		}
-	}); 
+function datos_producto(formData,tipo,p){
+	$.ajax({
+	    url: "../servidor/producto/producto.php?tipo="+tipo,			
+	    type: "POST",
+	    data:  formData,
+	    mimeType:"multipart/form-data",
+	    contentType: false,
+	    cache: false,
+	    processData:false,
+	    success: function(data, textStatus, jqXHR)
+	    {
+	        var res=data;
+	        if(res == 0){
+	            alert("Datos Guardados Correctamente");
+	            location.reload();	               	            
+	        } else{
+	            alert("Error..... Datos no Guardados La Página se recargara");
+	            location.reload();
+	        }
+	    },
+	    error: function(jqXHR, textStatus, errorThrown) 
+	    {
+	    } 	        
+	}); 	
 }
 function guardarFC(){
 	var resp=comprobarCamposRequired("form_facturaCompra");

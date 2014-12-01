@@ -396,7 +396,7 @@ function buscar_productos(){
     jQuery("#tabla_busquedas").jqGrid({
         datatype: "xml",
         url: '../servidor/producto/xml_producto.php',        
-        colNames: ['Id','Código','Descripción','Stock','Stock Mínimo','Stock máximo','estado','id_marca','Marca','Cod. Barras','Precio Compra','Precio Venta','Talla','Nombre Producto'],
+        colNames: ['Id','Código','Descripción','Stock','Stock Mínimo','Stock máximo','estado','id_marca','Marca','Cod. Barras','Precio Compra','Precio Venta','Talla','Nombre Producto','imagen'],
         colModel:[      
             {name:'id_producto',index:'id_producto',frozen:true,align:'left',search:false},
             {name:'cod_producto',index:'cod_producto',frozen : false,align:'left',search:true},
@@ -412,6 +412,7 @@ function buscar_productos(){
             {name:'precio_venta',index:'precio_venta',frozen : false,align:'left',search:false},
             {name:'talla',index:'talla',frozen : false,align:'left',search:true},
             {name:'nombre_producto',index:'nombre_producto',frozen : false,align:'left',search:true},
+            {name:'imagen',index:'imagen',frozen : false,align:'left',search:true},
         ],          
         rowNum: 10,
         autowidth: true, 
@@ -427,6 +428,8 @@ function buscar_productos(){
         ondblClickRow: function(rowid) {     
             var gsr = jQuery("#tabla_busquedas").jqGrid('getGridParam','selrow');         
             jQuery("#tabla_busquedas").jqGrid('GridToForm',gsr,"#form_productos");  
+            var ret = jQuery("#tabla_busquedas").jqGrid('getRowData',gsr);                        
+            $("#foto").attr("src","../fotos/"+ret.imagen);
             $('#modalBusquedas').modal('hide');
             comprobarCamposRequired("form_productos");  
             $("#btn_guardarProducto").text("");
@@ -463,6 +466,7 @@ function buscar_productos(){
     ); 
     jQuery("#tabla_busquedas").jqGrid('hideCol', "id_producto");
     jQuery("#tabla_busquedas").jqGrid('hideCol', "id_marca");
+    jQuery("#tabla_busquedas").jqGrid('hideCol', "imagen");
     //jQuery("#tabla_busquedas").jqGrid('setFrozenColumns');
 }
 function fc (){
@@ -482,8 +486,8 @@ function fc (){
             {name: 'total_fc', index: 'total_fc', editable: false, frozen: true, editrules: {required: true}, align: 'center', width: 70},            
         ],
         rowNum: 30,
-        shrinkToFit: true,
-        autowidth: true,
+        width:830,
+        shrinkToFit: true,        
         sortable: true,
         rowList: [10, 20, 30],
         pager: jQuery('#pager'),
@@ -586,7 +590,11 @@ function fc (){
             }
         }
     });
-
+    var resize = $('#list_fc').width() - 50;
+        if(resize < 0 ){
+            resize = 800;
+        }   
+        jQuery("#list").setGridWidth(830);          
 }
 function fv (){
     jQuery("#list1").jqGrid({
@@ -605,7 +613,7 @@ function fv (){
         ],
         rowNum: 30,
         shrinkToFit: true,
-        autowidth: true,
+        width:830,
         sortable: true,
         rowList: [10, 20, 30],
         pager: jQuery('#pager'),
@@ -688,6 +696,11 @@ function fv (){
             }
         }
     });
+    var resize = $('#list_fv').width() - 50;
+    if(resize < 0 ){
+        resize = 800;
+    }   
+    jQuery("#list1").setGridWidth(830);          
 
 }
 function buscar_fc(){
@@ -753,7 +766,7 @@ function buscar_fc(){
     jQuery("#tabla_busquedas").jqGrid('navButtonAdd', '#pager', {caption: "PDF",
         onClickButton: function() {
             var id = jQuery("#tabla_busquedas").jqGrid('getGridParam', 'selrow');
-
+            window.open("../reportes/reportes/factura_compra.php?id="+ret.id_factura_compra,'_blank');    
             if (id) {
             jQuery('#tabla_busquedas').jqGrid('restoreRow', id);   
             var ret = jQuery("#tabla_busquedas").jqGrid('getRowData', id);            
@@ -765,6 +778,82 @@ function buscar_fc(){
     });
 
 }
+function buscar_fv(){
+    jQuery("#tabla_busquedas").jqGrid({
+        url: '../servidor/factura_venta/xml_facturaVenta.php',
+        datatype: 'xml',
+        colNames: ['ID','Fecha Factura','id_clic','Cliente','id_usu','Usuario','Subtotal','Descuento','Iva','Total'],
+        colModel: [
+            {name: 'id_factura_venta', index: 'id_factura_venta',frozen:true,align:'left',search:false},
+            {name: 'fecha_factura', index: 'fecha_factura',frozen:true,align:'left',search:false},
+            {name: 'id_cliente_fv', index: 'id_cliente_fv',frozen:true,align:'left',search:false},
+            {name: 'nombre_cliente_fv', index: 'nombre_cliente_fv',frozen:true,align:'left',search:false},
+            {name: 'id_usuario', index: 'id_usuario',frozen:true,align:'left',search:false},
+            {name: 'nombre_usuario', index: 'nombre_usuario',frozen:true,align:'left',search:false},
+            {name: 'subtotal', index: 'subtotal',frozen:true,align:'left',search:false},
+            {name: 'descuento', index: 'descuento',frozen:true,align:'left',search:false},
+            {name: 'iva', index: 'iva',frozen:true,align:'left',search:false},
+            {name: 'total', index: 'total',frozen:true,align:'left',search:false},
+            
+        ],
+        rowNum: 10,
+        autowidth:true,
+        width: '100%',
+        rowList: [10, 20, 30],
+        pager: jQuery('#pager'),
+        sortname: 'id_factura_venta',
+        shrinkToFit: false,
+        sortorder: 'asc',
+        caption: 'Facturas Ventas',        
+        viewrecords: true,         
+    }).jqGrid('navGrid', '#pager',
+    {
+        add: false,
+        edit: false,
+        del: false,
+        refresh: true,
+        search: true,
+        view: false,
+    },
+    {
+        recreateForm: true, closeAfterEdit: true, checkOnUpdate: true, reloadAfterSubmit: true, closeOnEscape: true
+    },
+    {
+        reloadAfterSubmit: true, closeAfterAdd: true, checkOnUpdate: true, closeOnEscape: true,
+        bottominfo: "Todos los campos son obligatorios son obligatorios"
+    },
+    {
+        width: 300, closeOnEscape: true
+    },
+    {
+        closeOnEscape: true,
+        multipleSearch: false, overlay: false
+    },
+    {
+    },
+    {
+        closeOnEscape: true
+    });
+    jQuery("#tabla_busquedas").jqGrid('hideCol', "id_factura_venta");
+    jQuery("#tabla_busquedas").jqGrid('hideCol', "id_cliente_fv");      
+    jQuery("#tabla_busquedas").jqGrid('hideCol', "id_usuario");      
+    
+    jQuery("#tabla_busquedas").jqGrid('navButtonAdd', '#pager', {caption: "PDF",
+        onClickButton: function() {
+            var id = jQuery("#tabla_busquedas").jqGrid('getGridParam', 'selrow');
+            if (id) {
+            jQuery('#tabla_busquedas').jqGrid('restoreRow', id);   
+            var ret = jQuery("#tabla_busquedas").jqGrid('getRowData', id);                   
+            window.open("../reportes/reportes/factura_venta.php?id="+ret.id_factura_venta,'_blank');    
+            } else {
+                alert("Seleccione un fila");
+            }
+
+        }
+    });
+
+}
+
 function inventario_informacion (){
     jQuery("#list2").jqGrid({        
         url:'../servidor/inventario/xml_inventario.php',
@@ -807,8 +896,8 @@ function inventario_informacion (){
                 
               }
         },   
-        rowNum: 10,        
-        width: 850,
+        rowNum: 10,                
+        width: 850, 
         height:300,
         rowList: [10, 20, 30],
         pager: jQuery('#pager2'),
@@ -826,4 +915,6 @@ function inventario_informacion (){
                 view:true        
         });     
         jQuery("#list2").jqGrid('hideCol', "id_producto_inv");   
+        
+        jQuery("#list2").setGridWidth(850);  
 }

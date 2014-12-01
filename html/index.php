@@ -41,7 +41,6 @@ if (empty($_SESSION['id'])) {
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-
   <body>
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
@@ -52,11 +51,11 @@ if (empty($_SESSION['id'])) {
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">SIVZ</a>
+          <a class="navbar-brand" href="#" style="font-size:35px;font-weight:bold;color:white;">SIVZ</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="../index.php">Cerrar Sesión</a></li>
+            <li><a href="../index.php" style="font-size:15px;font-weight:normal;color:white;">Cerrar Sesión</a></li>
           </ul>
         </div>
       </div>
@@ -65,7 +64,7 @@ if (empty($_SESSION['id'])) {
     <div class="container-fluid ">
       <div class="row">
         <div class="col-sm-3 sidebar tab_index">
-          <ul class="nav nav-pills nav-stacked">
+          <ul class="nav nav-pills nav-stacked">          
             <li class="active"><a href="#tab_a" >Ingresos</a></li>
             <li><a href="#tab_b" >Ingreso de Productos</a></li>
             <li><a href="#tab_c" >Factura Venta</a></li>
@@ -73,9 +72,9 @@ if (empty($_SESSION['id'])) {
             <li><a href="#tab_e" >Inventario</a></li>
             <li><a href="#tab_f" >Reportes</a></li>
           </ul>
-        </div><!-- end of container -->
-        <div class="col-sm-9 col-sm-offset-3 sidebar" style="background:#FFF;">
-          <div class="tab-content content_index">
+        </div><!-- end of container -->        
+        <div class="col-sm-9 col-sm-offset-3 sidebar" style="background: rgb(190, 190, 190);">
+          <div class="tab-content content_index">          
             <div class="tab-pane active act" id="tab_a">
               <div class="container">
                 <ul class="nav nav-tabs">
@@ -83,7 +82,7 @@ if (empty($_SESSION['id'])) {
                   <li><a href="#tab_ingresoProveedores" data-toggle="tab">Ingreso de Proveedores</a></li>
                   <li><a href="#tab_tiposUsuarios" data-toggle="tab">Tipos de Usuarios</a></li>
                   <li><a href="#tab_marcas" data-toggle="tab">Ingreso de Marcas</a></li>
-                  <li><a href="#tab_calculoPrecio" data-toggle="tab">Cálculo de Precios</a></li>
+                  <!-- <li><a href="#tab_calculoPrecio" data-toggle="tab">Cálculo de Precios</a></li> -->
                   <li id="tab_user"><a href="#tab_usuarios" data-toggle="tab">Ingreso de usuarios</a></li>
                 </ul>
                 <div class="tab-content" >
@@ -107,11 +106,11 @@ if (empty($_SESSION['id'])) {
                       include 'form_marcas.php';
                     ?>
                   </div>
-                  <div class="tab-pane" id="tab_calculoPrecio">
+                  <!-- <div class="tab-pane" id="tab_calculoPrecio">
                     <?php 
-                      include 'form_calculoPrecio.php';
+                      //include 'form_calculoPrecio.php';
                     ?>
-                  </div>
+                  </div> -->
                   <div class="tab-pane" id="tab_usuarios">
                     <?php 
                       include 'form_usuarios.php';
@@ -141,16 +140,16 @@ if (empty($_SESSION['id'])) {
              ?>
             </div>
             <div class="tab-pane act" id="tab_f">
-              <h4>Pane eC</h4>
-                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames
-                      ac turpis egestas.</p>
+              <?
+              include 'form_reportes.php';
+              ?>
             </div>
 
           </div>  
         </div>
       </div> 
     </div>
-      <div class="modal" id="modalBusquedas">
+    <div class="modal" id="modalBusquedas">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -158,15 +157,15 @@ if (empty($_SESSION['id'])) {
             <h5 class="modal-title"><b>BÚSQUEDA DE REGISTROS</b></h5>
           </div>
           <div class="modal-body">
-          <div class="table-responsive" id="busquedasModificar">
-          </div>
+            <div class="table-responsive" id="busquedasModificar">
+            </div>
           </div>
           <div class="modal-footer">
             <a href="#" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" id="cerrarVentana"></span> Cerrar</a>
           </div>
         </div>
       </div>
-      </div>
+    </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
