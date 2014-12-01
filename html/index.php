@@ -108,7 +108,7 @@ if (empty($_SESSION['id'])) {
                   </div>
                   <!-- <div class="tab-pane" id="tab_calculoPrecio">
                     <?php 
-                      //include 'form_calculoPrecio.php';
+                      /*include 'form_calculoPrecio.php';*/
                     ?>
                   </div> -->
                   <div class="tab-pane" id="tab_usuarios">
@@ -140,7 +140,7 @@ if (empty($_SESSION['id'])) {
              ?>
             </div>
             <div class="tab-pane act" id="tab_f">
-              <?
+              <?php
               include 'form_reportes.php';
               ?>
             </div>
