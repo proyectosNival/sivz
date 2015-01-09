@@ -43,13 +43,13 @@
           <div class="form-group col-md-6">
             <label class="col-sm-3 control-label" for='nombre_usuario'>Nombres</label>
             <div class="col-sm-9 has-error">
-              <input type="text" class="form-control" id='nombre_usuario' name="nombre_usuario" data-toggle="tooltip" required pattern="[A-Za-záéíóúÁÉÍÓÚ0-9]{1,}" >  
+              <input type="text" class="form-control" id='nombre_usuario' name="nombre_usuario" data-toggle="tooltip" required pattern="[A-Za-záéíóúÁÉÍÓÚ0-9 ]{1,}" >  
             </div>
           </div>
           <div class="form-group col-md-6">
             <label class="col-sm-3 control-label" for='direccion_usuario'>Dirección</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" id='direccion_usuario' name="direccion_usuario" data-toggle="tooltip" pattern="[A-Za-záéíóúÁÉÍÓÚ0-9]{1,}" >  
+              <input type="text" class="form-control" id='direccion_usuario' name="direccion_usuario" data-toggle="tooltip" pattern="[A-Za-záéíóúÁÉÍÓÚ0-9 ]{1,}" >  
             </div>
           </div>
           <div class="form-group col-md-6">

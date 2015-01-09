@@ -13,7 +13,21 @@
              <div class="col-sm-3">               
               <button class="btn btn-primary col-sm-12" id="btn_reporte_marca" type="button">  
               <span class="glyphicon glyphicon-log-in"></span> Reporte</button>
+             </div>             
+           </div>
+            <div class="form-group col-md-12">
+             <label class="col-sm-2 control-label" for='fecha_inicial'>Fecha Inicial</label>
+             <div class="col-sm-2">               
+               <input type="text" class="form-control" id="fecha_inicial" name="fecha_final">
              </div>
+             <label class="col-sm-2 control-label" for='fecha_final'>Fecha Final</label>
+             <div class="col-sm-3">               
+               <input type="text" class="form-control" id="fecha_final" name="fecha_final">
+             </div>
+             <div class="col-sm-3">               
+              <button class="btn btn-primary col-sm-12" id="btn_reporte_venta_diario" type="button">  
+              <span class="glyphicon glyphicon-log-in"></span> Reporte</button>
+             </div>             
            </div>
          </div>
        </div>

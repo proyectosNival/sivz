@@ -169,7 +169,17 @@ function inicio(){
 	$("#lista_marcas").load("../servidor/producto/carga_marca.php");
 	$("#btn_reporte_marca").on("click",function(){
 		window.open("../reportes/reportes/lista_marca.php?id="+$("#lista_marcas").val(),'_blank');    
-	})
+	});
+
+	$('#fecha_inicial').datepicker({
+        dateFormat: 'yy-mm-dd'
+    }).datepicker('setDate', 'today');
+    $('#fecha_final').datepicker({
+        dateFormat: 'yy-mm-dd'
+    }).datepicker('setDate', 'today');
+    $("#btn_reporte_venta_diario").on("click",function(){
+		window.open("../reportes/reportes/venta_dia.php?fi="+$("#fecha_inicial").val()+"&ff="+$("#fecha_final").val(),'_blank');    
+	});
 	/*------*/
 	/*tooltips en los inputs*/
 	$("input").tooltip({

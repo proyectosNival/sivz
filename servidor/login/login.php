@@ -12,6 +12,13 @@
 		}
 		if( isset($pass) ){
 			session_start();
+			$sql = "select tipo_usuario from usuario where id_usuario ='$id'";
+			$sql = pg_query($sql);
+			$tipo = '';
+			while($row = pg_fetch_row($sql)){
+				$tipo = $row[0];
+			}
+			$_SESSION['tipo'] = $tipo;
 			$_SESSION['id']=$id;
 			$_SESSION['usuario']=$_POST['txt_loginUsuario'];
 			$data = 1;

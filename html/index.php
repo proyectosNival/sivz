@@ -64,13 +64,20 @@ if (empty($_SESSION['id'])) {
     <div class="container-fluid ">
       <div class="row">
         <div class="col-sm-3 sidebar tab_index">
-          <ul class="nav nav-pills nav-stacked">          
-            <li class="active"><a href="#tab_a" >Ingresos</a></li>
-            <li><a href="#tab_b" >Ingreso de Productos</a></li>
-            <li><a href="#tab_c" >Factura Venta</a></li>
-            <li><a href="#tab_d" >Factura Compra</a></li>
-            <li><a href="#tab_e" >Inventario</a></li>
-            <li><a href="#tab_f" >Reportes</a></li>
+          <ul class="nav nav-pills nav-stacked">   
+          <?php
+            if ($_SESSION['tipo'] == '1'){
+              echo '<li class="active"><a href="#tab_a" >Ingresos</a></li>';
+              echo '<li><a href="#tab_b" >Ingreso de Productos</a></li>';
+              echo '<li><a href="#tab_c" >Factura Venta</a></li>';
+              echo '<li><a href="#tab_d" >Factura Compra</a></li>';
+              echo '<li><a href="#tab_e" >Inventario</a></li>';
+              echo '<li><a href="#tab_f" >Reportes</a></li>';
+            }else{
+              echo '<li><a href="#tab_c" >Factura Venta</a></li>';
+            }
+            
+            ?>       
           </ul>
         </div><!-- end of container -->        
         <div class="col-sm-9 col-sm-offset-3 sidebar" style="background: rgb(190, 190, 190);">

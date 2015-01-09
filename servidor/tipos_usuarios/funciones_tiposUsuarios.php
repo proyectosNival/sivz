@@ -3,7 +3,8 @@
 	function verificar_nombre($conexion,$nombre){
 		if(strlen($nombre) >= 1)
 		{
-			$sql="select id_tipo_usuario from tipos_usuario where nombre_tipo_usuario ='$nombre'";
+			$sql="select id_tipo_usuario from tipos_usuario where nombre_usuario ='$nombre'";
+			
 			$devolver = null;
 			$rs = pg_query( $conexion, $sql );
 	        if( pg_num_rows($rs) > 0 ){

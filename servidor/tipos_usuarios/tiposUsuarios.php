@@ -4,12 +4,13 @@
 	include '../funciones_generales.php';
 	$data;
 	$conexion = conectarse();
-	if($_POST['tipo'] == "g"){
+	if($_POST['tipo'] == "g"){		
 		if( $_POST['nombre_tipo_usuario']){
 			$data=verificar_nombre($conexion,$_POST['nombre_tipo_usuario']);
 			if( $data == 0 ){
 				$cont=id_tabla($conexion,"tipos_usuario","id_tipo_usuario");
 				$sql="insert into tipos_usuario values('$cont','$_POST[nombre_tipo_usuario]','1')";
+				
 				pg_query( $conexion, $sql );
 			}
 		}else{
