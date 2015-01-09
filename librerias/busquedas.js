@@ -765,11 +765,11 @@ function buscar_fc(){
     
     jQuery("#tabla_busquedas").jqGrid('navButtonAdd', '#pager', {caption: "PDF",
         onClickButton: function() {
-            var id = jQuery("#tabla_busquedas").jqGrid('getGridParam', 'selrow');
-            window.open("../reportes/reportes/factura_compra.php?id="+ret.id_factura_compra,'_blank');    
+            var id = jQuery("#tabla_busquedas").jqGrid('getGridParam', 'selrow');            
             if (id) {
             jQuery('#tabla_busquedas').jqGrid('restoreRow', id);   
             var ret = jQuery("#tabla_busquedas").jqGrid('getRowData', id);            
+            window.open("../reportes/reportes/factura_compra.php?id="+ret.id_factura_compra,'_blank');    
             } else {
                 alert("Seleccione un fila");
             }
