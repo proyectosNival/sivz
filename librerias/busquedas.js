@@ -889,7 +889,7 @@ function inventario_informacion (){
                 }
                 if(parseInt(dd['stock_inv'])>parseInt(dd['max']))
                 {                    
-                    $("#list2").jqGrid('setRowData', rowData[i], false, {color:'blue'});
+                    $("#list2").jqGrid('setRowData', rowData[i], false, {color:'green'});
                     $("#list2").jqGrid('setRowData', rowData[i], false, {'font-size':'12px'});
                 }
                 

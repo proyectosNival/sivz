@@ -97,9 +97,13 @@ function inicio(){
 	$("#nombre_proveedor_fc").keyup(function (){
 		autocompletar("nombre_proveedor_fc","ci_proveedor_fc","id_proveedor_fc","../servidor/factura_compra/buscar_proveedor.php?tipo=1","form_facturaCompra");
 	});
-	$("#cod_prod_fc").keyup(function (){
-		autocompletar("cod_prod_fc","nombre_prod_fc","id_producto_fc","../servidor/factura_compra/buscar_producto.php?tipo=0","form_facturaCompra");
-	});
+	$("#cod_prod_fc").on("keypress",function (e){
+		if (e.which === 13 || e.keyCode === 13) {
+			autocompletarBarras1($("#cod_prod_fc").val());			
+			return false;	
+		}		
+		
+	});	
 	$("#nombre_prod_fc").keyup(function (){
 		autocompletar("nombre_prod_fc","cod_prod_fc","id_producto_fc","../servidor/factura_compra/buscar_producto.php?tipo=1","form_facturaCompra");
 	});
@@ -134,9 +138,13 @@ function inicio(){
 	$("#nombre_cliente_fv").keyup(function (){
 		autocompletar("nombre_cliente_fv","ci_cliente_fv","id_cliente_fv","../servidor/factura_venta/busca_clientes.php?tipo=1","form_facturaVenta");
 	});
-	$("#cod_prod_fv").keyup(function (){
-		autocompletar1("cod_prod_fv","nombre_prod_fv","id_producto_fv","../servidor/factura_compra/buscar_producto.php?tipo=0","form_facturaVenta","precio_total_fv");
-	});
+	$("#cod_prod_fv").on("keypress",function (e){
+		if (e.which === 13 || e.keyCode === 13) {
+			autocompletarBarras($("#cod_prod_fv").val());			
+			return false;	
+		}		
+		
+	});	
 	$("#nombre_prod_fv").keyup(function (){
 		autocompletar1("nombre_prod_fv","cod_prod_fv","id_producto_fv","../servidor/factura_compra/buscar_producto.php?tipo=1","form_facturaVenta","precio_total_fv");
 	});
@@ -157,6 +165,12 @@ function inicio(){
 	/*inventario*/
 		inventario_informacion($("#list2"))
 	/*-------*/
+	/*reportes*/
+	$("#lista_marcas").load("../servidor/producto/carga_marca.php");
+	$("#btn_reporte_marca").on("click",function(){
+		window.open("../reportes/reportes/lista_marca.php?id="+$("#lista_marcas").val(),'_blank');    
+	})
+	/*------*/
 	/*tooltips en los inputs*/
 	$("input").tooltip({
        placement : 'top'
@@ -817,6 +831,40 @@ function autocompletar(campo,campoNombre,campoId,direccion,form){
         .append( "<a>"+ item.label1 + "</a>" )
         .appendTo( ul );
     };
+}
+function autocompletarBarras(campo){
+	$.ajax({				
+		type: "POST",
+		data: "cod="+campo,
+		dataType: 'json',
+		url: "../servidor/factura_venta/cargaBarras.php",			
+	    success: function(data) {		
+	        		
+	    	$("#id_producto_fv").val(data[0]);
+	    	$("#nombre_prod_fv").val(data[1]);
+	    	$("#cantidad_fv").val("1");
+	    	$("#precio_venta_fv").val(data[3]);
+	    	$("#precio_total_fv").val(data[4]);
+	    	
+
+		}
+	}); 
+}
+function autocompletarBarras1(campo){
+	$.ajax({				
+		type: "POST",
+		data: "cod="+campo,
+		dataType: 'json',
+		url: "../servidor/factura_venta/cargaBarras.php",			
+	    success: function(data) {		
+	        		
+	    	$("#id_producto_fc").val(data[0]);
+	    	$("#nombre_prod_fc").val(data[1]);
+	    	$("#cantidad_fc").val("1");	    	
+	    	
+
+		}
+	}); 
 }
 function autocompletar1(campo,campoNombre,campoId,direccion,form,cp){
 	$("#"+campo).autocomplete({

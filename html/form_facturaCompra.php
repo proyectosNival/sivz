@@ -31,20 +31,20 @@
             </div>
           </div>
           
-          <div class="col-sm-2">
+          <div class="col-sm-3" style="padding-right:0px;">
             <input type="hidden" class="form-control" id='id_producto_fc' name="id_producto_fc" >  
             <input type="text" class="form-control" id='cod_prod_fc' placeholder="Código Prod. Barras" name="cod_prod_fc">  
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-2" style="padding:0px;">
             <input type="text" class="form-control" id='nombre_prod_fc' name="nombre_prod_fc" placeholder="Nombre Prod." >  
           </div>
-          <div class="col-sm-2">
+          <div class="col-sm-2" style="padding:0px;">
             <input type="text" class="form-control" id='cantidad_fc' name="cantidad_fc" placeholder="Cantidad" >  
           </div>
-          <div class="col-sm-2">
+          <div class="col-sm-2" style="padding:0px;">
             <input type="text" class="form-control" id='precio_compra_fc' name="precio_compra_fc" placeholder="P. Compra" >  
           </div>
-          <div class="col-sm-2">
+          <div class="col-sm-2" style="padding:0px;">
             <input type="text" class="form-control" id='precio_venta_fc' name="precio_venta_fc" placeholder="P. Venta" >  
           </div>                    
           <div class="col-sm-12" id="list_fc">

@@ -30,20 +30,20 @@
               <input type="text" class="form-control" id='fecha_facturaV' name="fecha_facturaV" >  
             </div>
           </div>          
-          <div class="col-sm-2">
-          <input type="hidden" class="form-control" id='id_producto_fv' name="id_producto_fv" >  
+          <div class="col-sm-3" style="padding-right:0px;">
+            <input type="hidden" class="form-control" id='id_producto_fv' name="id_producto_fv" >  
             <input type="text" class="form-control" id='cod_prod_fv' placeholder="Código Prod. Barras" name="cod_prod_fv">  
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-2" style="padding:0px;">
             <input type="text" class="form-control" id='nombre_prod_fv' name="nombre_prod_fv" placeholder="Nombre Prod." >  
           </div>
-          <div class="col-sm-2">
+          <div class="col-sm-2" style="padding:0px;">
             <input type="text" class="form-control" id='cantidad_fv' name="cantidad_fv" placeholder="Cantidad" >  
           </div>
-          <div class="col-sm-2">
+          <div class="col-sm-2" style="padding:0px;">
             <input type="text" class="form-control" id='precio_venta_fv' name="precio_venta_fv" placeholder="P. Venta" >  
           </div>
-          <div class="col-sm-2">
+          <div class="col-sm-2" style="padding:0px;">
             <input type="text" readonly class="form-control" id='precio_total_fv' name="precio_total_fv" placeholder="Precio Venta" >  
           </div>         
           <div class="col-sm-12" id="list_fv">

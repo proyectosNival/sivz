@@ -52,7 +52,14 @@
 	       	$t_total = $t_t - $t_compra;
 			$t_total = number_format($t_total,2, '.', '');	        
 
-			$t_precio_compra = $t_total / $stock; 
+			if($stock == 0){
+	        	$t_total = 0;	
+	        	$t_precio_compra = 0;
+	        }else{	        	
+	        	$t_precio_compra = $t_total / $stock; 
+	        }
+			//$t_precio_compra = $t_total / $stock; 
+
 			$t_precio_compra = number_format($t_precio_compra,2, '.', '');	        
 
 	        $cont_kardex=id_tabla($conexion,"kardex_producto","id_kardex_producto");

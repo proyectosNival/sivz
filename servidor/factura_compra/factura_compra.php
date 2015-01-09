@@ -49,8 +49,15 @@
 	        $stock = $arreglo2[$i] + $c_t;	       
 
 	        $t_precio_compra = $t_t + $arreglo5[$i];
-
-	        $precio_compra = $t_precio_compra / $stock;
+	        //echo $t_precio_compra."-".$stock;
+	        if($stock == 0){
+	        	$precio_compra = 0;	
+	        	$t_precio_compra = 0;
+	        }else{
+	        	$precio_compra = $t_precio_compra / $stock;	
+	        }
+	        
+	        //echo $precio_compra."-";
 	        $precio_compra = number_format($precio_compra,2, '.', '');
 
 	        $cont_kardex=id_tabla($conexion,"kardex_producto","id_kardex_producto");
